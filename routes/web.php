@@ -14,7 +14,14 @@ Route::group(['namespace' => 'Admin','prefix' => 'admin'], function (){
     Route::get('logout','AdminsController@logout')->name('admin.logout'); //退出登录
 
     /**需要登录认证模块**/
-    Route::middleware(['auth:admin','rbac'])->group(function (){
+    Route::middleware(['auth:admin','rbac'])->group(
+        /**
+         * @Title :
+         * @User  : company_windows_locahost_wm
+         * @Date  : 2018/11/6
+         * @Time  : 15:05
+         */
+        function (){
 
         Route::resource('index', 'IndexsController', ['only' => ['index']]);  //首页
 
@@ -37,5 +44,104 @@ Route::group(['namespace' => 'Admin','prefix' => 'admin'], function (){
         Route::resource('rules','RulesController',['only'=> ['index','create','store','update','edit','destroy'] ]);  //权限
 
         Route::resource('actions','ActionLogsController',['only'=> ['index','destroy'] ]);  //日志
+
+            /**
+             * 账单
+             */
+        Route::group(
+            ['namespace' => 'Bank','prefix' => 'bank'],
+            /**
+             * @Title :
+             * @User  : company_windows_locahost_wm
+             * @Date  : 2018/11/6
+             * @Time  : 15:16
+             */
+            function (){
+                Route::resource('lists','ListsController');
+            }
+        );
+            /**
+             * 用户
+             */
+        Route::group(
+             ['namespace' => 'Users','prefix' => 'users'],
+                /**
+                 * @Title :
+                 * @User  : company_windows_locahost_wm
+                 * @Date  : 2018/11/6
+                 * @Time  : 15:16
+                 */
+             function (){
+                 Route::resource('/user','UsersController');
+             }
+        );
+            /**
+             * 设备
+             */
+        Route::group(
+            ['namespace' => 'Equipment','prefix' => 'equipment'],
+            /**
+             * @Title :
+             * @User  : company_windows_locahost_wm
+             * @Date  : 2018/11/6
+             * @Time  : 15:16
+             */
+            function (){
+
+                Route::resource('/equipment','EquipmentController');
+            }
+        );
+            /**
+             * 分组
+             */
+        Route::group(
+            ['namespace' => 'Group','prefix' => 'group'],
+            /**
+             * @Title :
+             * @User  : company_windows_locahost_wm
+             * @Date  : 2018/11/6
+             * @Time  : 15:16
+             */
+            function (){
+
+                Route::resource('/group','GroupController');
+            }
+        );
+            /**
+             * 停车
+             */
+        Route::group(
+            ['namespace' => 'Parking','prefix' => 'parking'],
+            /**
+             * @Title :
+             * @User  : company_windows_locahost_wm
+             * @Date  : 2018/11/6
+             * @Time  : 15:16
+             */
+            function (){
+
+                Route::resource('/parking','ParkingController');
+                /**
+                 * 停车设置
+                 */
+                Route::resource('/parksetup','ParkingSetUpController');
+            }
+        );
+            /**
+             * 网点
+             */
+        Route::group(
+            ['namespace' => 'Dot','prefix' => 'dot'],
+            /**
+             * @Title :
+             * @User  : company_windows_locahost_wm
+             * @Date  : 2018/11/6
+             * @Time  : 15:16
+             */
+            function (){
+
+                Route::resource('/dot','DotController');
+            }
+        );
     });
 });
