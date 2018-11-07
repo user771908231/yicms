@@ -8,6 +8,7 @@ class ActionLog extends Model
 {
     protected $fillable = ['admin_id','data'];
 
+    protected $primaryKey='id';
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
@@ -24,5 +25,10 @@ class ActionLog extends Model
     public function getDataAttribute($value)
     {
         return json_decode($value,true);
+    }
+
+    public function getById(int $id)
+    {
+        return $this->where($this->primaryKey,$id)->first();
     }
 }

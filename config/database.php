@@ -53,6 +53,20 @@ return [
             'strict' => true,
             'engine' => null,
         ],
+        'thing-eye' => [
+            'driver' => 'mysql',
+            'host' => env('THING_EYE_DB_HOST', '127.0.0.1'),
+            'port' => env('THING_EYE_DB_PORT', '3306'),
+            'database' => env('THING_EYE_DB_DATABASE', 'forge'),
+            'username' => env('THING_EYE_DB_USERNAME', 'forge'),
+            'password' => env('THING_EYE_DB_PASSWORD', ''),
+            'unix_socket' => env('THING_EYE_DB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+        ],
 
         'pgsql' => [
             'driver' => 'pgsql',

@@ -14,7 +14,7 @@
           <i class="icon-users"></i>
         </div>
         <div class="value">
-          <a href="#"><h1 id="count1">1</h1></a>
+          <a href="#"><h1 id="count1">{{count($admin->attribute->user)}}</h1></a>
           <p>用户总量</p>
         </div>
       </section>
@@ -74,7 +74,6 @@
       </section>
     </div>
     <!-- 表单 -->
-
     <!-- 版权信息 -->
     <div class="col-lg-6">
       <section class="panel">
