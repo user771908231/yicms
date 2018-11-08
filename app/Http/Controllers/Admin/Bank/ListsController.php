@@ -10,25 +10,23 @@ namespace App\Http\Controllers\Admin\Bank;
 
 
 use App\Http\Controllers\Admin\BaseController;
-use App\Services\ActionLogsService;
+use App\Models\Bill\Bill;
 use Illuminate\Support\Facades\Auth;
 
 class ListsController extends BaseController
 {
-    protected $actionLogsService;
-    protected $user;
-    public function __construct(ActionLogsService $actionLogsService,Auth $auth)
+    protected $bill;
+    public function __construct(Bill $bill)
     {
-        $this->actionLogsService = $actionLogsService;
-        $this->user = $auth->user();
+        $this->bill = $bill;
     }
 
     public function index()
     {
-        dd($this->user);
-        $rules = $this->rulesService->getRulesTree();
 
-        return $this->view(null,compact('rules'));
+        $lists = $this->bill->getByCmid(Auth::user()->attribute->ac_id);
+
+        return $this->view(null,compact('lists'));
     }
 
     /**
@@ -36,7 +34,7 @@ class ListsController extends BaseController
      */
     public function create()
     {
-        $rules = $this->rulesService->getRulesTree();
+        $rules = $this->bill->getRulesTree();
 
         return $this->view(null,compact('rules'));
     }
@@ -47,7 +45,7 @@ class ListsController extends BaseController
      */
     public function store(RuleRequest $request)
     {
-        $this->rulesService->create($request->all());
+        $this->bill->create($request->all());
 
         flash('添加权限成功')->success()->important();
 
@@ -61,8 +59,8 @@ class ListsController extends BaseController
      */
     public function edit($id)
     {
-        $rules = $this->rulesService->getRulesTree();
-        $rule = $this->rulesService->ById($id);
+        $rules = $this->bill->getRulesTree();
+        $rule = $this->bill->ById($id);
 
         return $this->view(null,compact('rule','rules'));
     }
@@ -74,7 +72,7 @@ class ListsController extends BaseController
      */
     public function update(RuleRequest $request, $id)
     {
-        $rule = $this->rulesService->ById($id);
+        $rule = $this->bill->ById($id);
         if(is_null($rule))
         {
             flash('你无权操作')->error()->important();
@@ -92,7 +90,7 @@ class ListsController extends BaseController
      */
     public function destroy($id)
     {
-        $rule = $this->rulesService->ById($id);
+        $rule = $this->bill->ById($id);
 
         if(empty($rule))
         {
@@ -115,7 +113,7 @@ class ListsController extends BaseController
      */
     public function status($status,$id)
     {
-        $rule = $this->rulesService->ById($id);
+        $rule = $this->bill->ById($id);
 
         if(empty($rule))
         {

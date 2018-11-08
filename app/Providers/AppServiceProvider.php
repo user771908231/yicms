@@ -18,6 +18,9 @@ class AppServiceProvider extends ServiceProvider
         \App\Models\Role::observe(\App\Observers\RoleObserver::class);
         \App\Models\Rule::observe(\App\Observers\RuleObserver::class);
         \App\Models\RoleAuth::observe(\App\Observers\RoleAuthObserver::class);
+        \Blade::directive('datetime', function($expression) {
+            return "<?php echo ($expression)->format('m-d-Y H:i:s'); ?>";
+        });
         Carbon::setLocale('zh');
     }
 

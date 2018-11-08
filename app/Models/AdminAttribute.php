@@ -9,6 +9,8 @@
 namespace App\Models;
 
 
+use App\Models\Open\OpenRecordOld;
+use App\Models\Open\OpenRecord;
 use Illuminate\Database\Eloquent\Model;
 
 class AdminAttribute extends Model
@@ -17,7 +19,9 @@ class AdminAttribute extends Model
 
     protected $primaryKey="id";
 
-    protected $with=['user'];
+    protected $with=[
+        'user',
+        ];
 
     /**
      * @Title : name
@@ -33,5 +37,17 @@ class AdminAttribute extends Model
     public function user()
     {
         return $this->hasMany(Users::class,'companyID','ac_id');
+    }
+
+    public function openRecord()
+    {
+        sleep(5);
+        return $this->hasMany(OpenRecord::class,'ac_id','ac_id');
+    }
+
+    public function openRecordOld()
+    {
+        sleep(5);
+        return $this->hasMany(OpenRecordOld::class,'ac_id','ac_id');
     }
 }
