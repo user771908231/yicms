@@ -30,7 +30,20 @@ class OpenRecord extends Model
 
     public static function getLists(int $id)
     {
-        return OpenRecord::where('ac_id',$id)->orderBy('v_id', 'desc')->paginate(20);
+        return OpenRecord::select([
+            'v_id',
+            'ac_id',
+            'ac_name',
+            'type',
+            'is_out',
+            'user_id',
+            'time',
+            'license_plate',
+            'reason'
+        ])
+            ->where('ac_id',$id)
+            ->orderBy('v_id', 'desc')
+            ->paginate(20);
     }
 
     public function user()

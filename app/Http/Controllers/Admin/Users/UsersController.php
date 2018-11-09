@@ -69,7 +69,7 @@ class UsersController extends BaseController
         }else{
             flash('删除失败！')->success()->important();
         }
-        
+
         return redirect()->route('user.index');
     }
 }

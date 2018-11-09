@@ -3,10 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Role extends Model
 {
-    protected $fillable = ['name', 'remark', 'order', 'status'];
+    protected $fillable = ['name', 'remark', 'order', 'status','u_id'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
@@ -31,6 +32,11 @@ class Role extends Model
     public function rulesPublic()
     {
         return $this->rules()->public()->orderBy('sort','asc')->get();
+    }
+
+    public function thisUser()
+    {
+        return $this->where('u_id',Auth::id());
     }
 
 }

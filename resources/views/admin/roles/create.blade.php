@@ -11,6 +11,7 @@
             <div class="hr-line-dashed m-t-sm m-b-sm"></div>
             <form class="form-horizontal m-t-md" action="{{route('roles.store')}}" method="post">
                 {!! csrf_field() !!}
+                <input type="hidden"  name="u_id" value="{{$data}}">
                 <div class="form-group">
                     <label class="col-sm-2 control-label">角色名称：</label>
                     <div class="input-group col-sm-2">

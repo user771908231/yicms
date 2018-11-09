@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\RoleRequest;
 use App\Models\Role;
 use App\Repositories\RulesRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RolesController extends BaseController
 {
@@ -17,7 +18,7 @@ class RolesController extends BaseController
      */
     public function index(Role $role)
     {
-        $roles = $role->paginate(10);
+        $roles = $role->thisUser()->paginate(10);
 
         return $this->view(null,compact('roles'));
     }
@@ -28,7 +29,8 @@ class RolesController extends BaseController
      */
     public function create()
     {
-        return $this->view();
+        $data = Auth::id();
+        return $this->view()->with('data',$data);
     }
 
     /**
@@ -39,11 +41,13 @@ class RolesController extends BaseController
      */
     public function store(RoleRequest $request, Role $role)
     {
-        $role->fill($request->all());
+        $role->fill($request->only("u_id","name","remark","status",'order'));
 
-        $role->save();
-
-        flash('添加角色成功')->success()->important();
+        if ($role->save()){
+            flash('添加角色成功')->success()->important();
+        }else{
+            flash('添加角色失败')->success()->important();
+        }
 
         return redirect()->route('roles.index');
     }

@@ -8,7 +8,7 @@
         <div class="ibox-content">
             <a class="menuid btn btn-primary btn-sm" href="javascript:history.go(-1)">返回</a>
 {{--            <a href="{{route('admins.create')}}" link-url="javascript:void(0)"><button class="btn btn-primary btn-sm" type="button"><i class="fa fa-plus-circle"></i> 添加管理员</button></a>--}}
-            <form method="post" action="{{route('admins.index')}}" name="form">
+            <form method="post" action="{{route('lists.index')}}" name="form">
                 <table class="table table-striped table-bordered table-hover m-t-md">
                     <thead>
                     <tr>

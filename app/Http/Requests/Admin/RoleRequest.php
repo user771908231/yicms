@@ -28,6 +28,7 @@ class RoleRequest extends FormRequest
             'remark' => 'max:300',
             'order'  => 'required:integer',
             'status' => 'required:integer',
+            'u_id' => 'required:integer',
         ];
     }
 

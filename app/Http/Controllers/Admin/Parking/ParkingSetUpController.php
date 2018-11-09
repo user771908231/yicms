@@ -16,10 +16,7 @@ class ParkingSetUpController extends BaseController
 {
     public function index()
     {
-//        dd(Auth::user());
-//        dd(\Route::currentRouteName());
 
-        dd(Auth::guard('admin')->user()->hasRule(\Route::currentRouteName()));
     }
 
     public function create()
