@@ -60,9 +60,9 @@ class ActionLogsService
             'address'=> $address[0].$address[1].$address[2],
             'action'=> $action,
         ];
-
         $datas['data'] = json_encode($data);
         $datas['type'] = 2;
+        $datas['admin_id'] = $admin->id;
         return $this->actionLogsRepository->create($datas);
     }
 
@@ -77,7 +77,6 @@ class ActionLogsService
         $path = Route::currentRouteName();
 
         $rule = $this->rulesRepository->ByRoute($path);
-
         if(is_null($rule)) return false;
 
         //获取当前操作方法上级模块名称
