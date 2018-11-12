@@ -87,7 +87,7 @@ class ParkingSetUpController extends BaseController
             ])){
                 flash('更新成功')->success()->important();
             }else{
-                flash('更新失败')->success()->important();
+                flash('更新失败')->error()->important();
             }
         }
 

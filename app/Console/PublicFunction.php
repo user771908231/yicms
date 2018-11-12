@@ -94,4 +94,54 @@ class PublicFunction
         return implode(",", $arr);
     }
 
+    public static function building($num_str,$type)
+    {
+        $len=strlen($num_str);
+        $b = "";
+        switch ($type){
+            case 1:
+                switch ($len){
+                    case 1:
+                        $b = "0".$num_str;
+                        break;
+                    case 2:
+                        $b = $num_str;
+                        break;
+                }
+                return $b."单元";
+                break;
+            case 2:
+                switch ($len){
+                    case 1:
+                        $b="000".$num_str;
+                        break;
+                    case 2:
+                        $b ="00".$num_str;
+                        break;
+                    case 3:
+                        $b = "0".$num_str;
+                        break;
+                    case 4:
+                        $b = $num_str;
+                        break;
+                }
+                return $b."号";
+                break;
+            default:
+                switch ($len){
+                    case 1:
+                        $b="00".$num_str;
+                        break;
+                    case 2:
+                        $b ="0".$num_str;
+                        break;
+                    case 3:
+                        $b = $num_str;
+                        break;
+                }
+                return $b."栋";
+                break;
+        }
+    }
+
 }

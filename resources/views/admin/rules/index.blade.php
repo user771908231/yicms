@@ -14,7 +14,9 @@
             <h5>权限列表</h5>
         </div>
         <div class="ibox-content">
+            @if(\Illuminate\Support\Facades\Auth::id() == 1)
             <a href="{{route('rules.create')}}" link-url="javascript:void(0)"><button class="btn btn-primary btn-sm" type="button"><i class="fa fa-plus-circle"></i> 添加权限</button></a>
+            @endif
             <table class="table table-striped table-bordered table-hover m-t-md">
                 <thead>
                     <tr>
