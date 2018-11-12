@@ -80,6 +80,18 @@
                             {{--<td class="text-center">--}}
                                 <div class="btn-group">
                                     <td class="text-center">
+                                        <form class="form-common" action="{{route('lists.update',$item->id)}}" method="post">
+                                            {{ csrf_field() }}
+                                            {{ method_field('PATCH') }}
+                                            <input type="hidden" name="type" value="0">
+                                            <button class="btn btn-primary btn-xs" type="submit"><i class="fa fa-jpy"></i> 手动缴费</button>
+                                        </form>
+                                        <form class="form-common" action="{{route('lists.update',$item->id)}}" method="post">
+                                            {{ csrf_field() }}
+                                            {{ method_field('PATCH') }}
+                                            <input type="hidden" name="type" value="1">
+                                            <button class="btn btn-primary btn-xs" type="submit"><i class="fa fa-check-square-o"></i> 出库</button>
+                                        </form>
                                         <form class="form-common" action="{{route('lists.destroy',$item->id)}}" method="post">
                                             {{ csrf_field() }}
                                             {{ method_field('DELETE') }}

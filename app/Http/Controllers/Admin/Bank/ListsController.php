@@ -11,6 +11,7 @@ namespace App\Http\Controllers\Admin\Bank;
 
 use App\Http\Controllers\Admin\BaseController;
 use App\Models\Bill\Bill;
+use App\Models\Park\Parking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -74,15 +75,20 @@ class ListsController extends BaseController
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(RuleRequest $request, $id)
+    public function update(int $id,Request $request)
     {
-        $rule = $this->bill->ById($id);
-        if(is_null($rule))
-        {
-            flash('你无权操作')->error()->important();
+//        dd($this->bill->find($id),$request->only(['type']));
+        if ($request->only(['type']) == 1){
+
+        }else{
+            $parking_info = Parking::getParkingInfoById($id);
+            dd($parking_info);
         }
 
-        $rule->update($request->all());
+            flash('你无权操作')->error()->important();
+
+
+
         flash('更新成功')->success()->important();
 
         return redirect()->route('rules.index');

@@ -29,7 +29,7 @@ class ParkingController extends BaseController
 
     }
 
-    public function update()
+    public function update(int $id)
     {
 
     }
