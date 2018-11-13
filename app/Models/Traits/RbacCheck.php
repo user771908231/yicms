@@ -46,7 +46,8 @@ trait RbacCheck
             /**获得当前用户所有权限路由*/
             $permissions = array_unique($permissions);
             /**将权限路由存入缓存中*/
-            Cache::tags(['rbac', 'rules'])->forever($cache_key, $permissions);
+//            Cache::tags(['rbac', 'rules'])->forever($cache_key, $permissions);
+            Cache::tags(['rbac', 'rules'])->put($cache_key, $permissions,1);
         }
 
         return Cache::tags(['rbac', 'rules'])->get($cache_key);
@@ -85,7 +86,8 @@ trait RbacCheck
             }
 
             /**将权限路由存入缓存中*/
-            Cache::tags(['rbac', 'menus'])->put($menu_cache, $rules,86400);
+//            Cache::tags(['rbac', 'menus'])->put($menu_cache, $rules,86400);
+            Cache::tags(['rbac', 'menus'])->put($menu_cache, $rules,1);
         }
 
 
@@ -107,7 +109,8 @@ trait RbacCheck
             }
 
             /**将权限路由存入缓存中*/
-            Cache::tags(['rbac', 'rules_obj'])->forever($cache_key, $permissions);
+//            Cache::tags(['rbac', 'rules_obj'])->forever($cache_key, $permissions);
+            Cache::tags(['rbac', 'rules_obj'])->put($cache_key, $permissions,1);
         }
 
         return Cache::tags(['rbac', 'rules_obj'])->get($cache_key);
@@ -120,5 +123,14 @@ trait RbacCheck
     public function clearRuleAndMenu()
     {
         return Cache::tags('rbac')->flush();
+    }
+
+    public static  function deleteRuleAndMenu()
+    {
+        try{
+            Cache::tags('rbac')->flush();
+        }catch (\Exception $exception){
+            return $exception->getMessage();
+        }
     }
 }

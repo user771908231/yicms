@@ -58,7 +58,7 @@ class AdminsService
                 $datas['avatr'] = $result['path'];
             }
         }
-
+        $datas['pid'] = \Illuminate\Support\Facades\Auth::id();
         $datas['password'] = Hash::make($request->password);
         $datas['create_ip'] = $request->ip();
         $datas['last_login_ip'] = $request->ip();
@@ -122,6 +122,11 @@ class AdminsService
     public function getAdminsWithRoles()
     {
         return $this->adminsRepository->getAdminsWithRoles();
+    }
+
+    public function thisAdminsWithRoles()
+    {
+        return $this->adminsRepository->thisAdminsWithRoles();
     }
 
 

@@ -29,11 +29,16 @@
                     <div class="m-b"></div>
                     <h4>欢迎使用 <span class="label label-info">{{ config('app.name', 'Laravel') }}</span></h4>
                     <ul class="m-b">
-                        <li><i class="fa fa-circle text-navy"></i> 优势一：采用Laravel 5.5 框架开发</li>
-                        <li><i class="fa fa-circle text-navy"></i> 优势二：采用最流行的前端技术</li>
-                        <li><i class="fa fa-circle text-navy"></i> 优势三：极佳的用户操作体验和安全策略</li>
-                        <li><i class="fa fa-circle text-navy"></i> 优势四：MVC分层模式，应用模块化</li>
-                        <li><i class="fa fa-circle text-navy"></i> 优势五：最大亮点是对接公众平台</li>
+                        {{--<li><i class="fa fa-circle text-navy"></i> 优势一：采用Laravel 5.5 框架开发</li>--}}
+                        {{--<li><i class="fa fa-circle text-navy"></i> 优势二：采用最流行的前端技术</li>--}}
+                        {{--<li><i class="fa fa-circle text-navy"></i> 优势三：极佳的用户操作体验和安全策略</li>--}}
+                        {{--<li><i class="fa fa-circle text-navy"></i> 优势四：MVC分层模式，应用模块化</li>--}}
+                        {{--<li><i class="fa fa-circle text-navy"></i> 优势五：最大亮点是对接公众平台</li>--}}
+                        <li><i class="fa fa-circle text-navy"></i> 新增辅助管理用户</li>
+                        <li><i class="fa fa-circle text-navy"></i> 设备管理</li>
+                        <li><i class="fa fa-circle text-navy"></i> 网点管理</li>
+                        {{--<li><i class="fa fa-circle text-navy"></i> 优势四：MVC分层模式，应用模块化</li>--}}
+                        {{--<li><i class="fa fa-circle text-navy"></i> 优势五：最大亮点是对接公众平台</li>--}}
                     </ul>
                 </div>
             </div>

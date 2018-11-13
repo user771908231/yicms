@@ -16,6 +16,7 @@
 namespace App\Repositories;
 
 use App\Models\Admin;
+use Illuminate\Support\Facades\Auth;
 
 class AdminsRepository
 {
@@ -46,6 +47,11 @@ class AdminsRepository
     public function getAdminsWithRoles()
     {
         return Admin::with('roles')->latest('updated_at')->paginate('10');
+    }
+
+    public function thisAdminsWithRoles()
+    {
+        return Admin::where('pid',Auth::id())->with('roles')->latest('updated_at')->paginate('10');
     }
 
     /**

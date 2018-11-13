@@ -14,22 +14,47 @@
           <i class="icon-users"></i>
         </div>
         <div class="value">
-          <a href="#"><h1 id="count1">{{count($admin->attribute->user)}}</h1></a>
+          <a href="#"><h1 id="count1">
+              @if($admin)
+                @if($admin->attribute)
+                {{count($admin->attribute->user)}}
+                @else
+                  0
+                @endif
+              @else
+                0
+              @endif
+            </h1></a>
           <p>用户总量</p>
         </div>
       </section>
     </div>
-    {{--<div class="col-lg-3 col-sm-6">--}}
-      {{--<section class="panel">--}}
-        {{--<div class="symbol commred">--}}
-          {{--<i class="icon-user-add"></i>--}}
-        {{--</div>--}}
-        {{--<div class="value">--}}
-          {{--<a href="#"><h1 id="count2">56</h1></a>--}}
-          {{--<p>今日注册用户</p>--}}
-        {{--</div>--}}
-      {{--</section>--}}
-    {{--</div>--}}
+    <div class="col-lg-3 col-sm-6">
+      <section class="panel">
+        <div class="symbol commred">
+          <i class="fa fa-automobile"></i>
+        </div>
+        <div class="value">
+          <a href="#"><h1 id="count2">
+              @if($admin)
+                @if($admin->attribute)
+                  @if($admin->attribute->accessControl)
+                    {{$admin->attribute->accessControl->garage_number}}
+                  @else
+                    {{$admin->attribute->accessControl->garage_number_all}}
+                  @endif
+                @else
+                  0
+                @endif
+              @else
+                0
+              @endif
+
+            </h1></a>
+          <p>今日剩余车位</p>
+        </div>
+      </section>
+    </div>
     {{--<div class="col-lg-3 col-sm-6">--}}
       {{--<section class="panel">--}}
         {{--<div class="symbol articlegreen">--}}

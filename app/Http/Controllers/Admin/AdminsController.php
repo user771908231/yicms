@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\AdminRequest;
+use App\Models\Traits\RbacCheck;
 use Illuminate\Http\Request;
 use App\Services\AdminsService;
 use App\Repositories\RolesRepository;
 use App\Http\Requests\Admin\AdminLoginRequest;
+use Illuminate\Support\Facades\Auth;
 
 class AdminsController extends BaseController
 {
@@ -31,8 +33,8 @@ class AdminsController extends BaseController
      */
     public function index()
     {
-        $admins = $this->adminsService->getAdminsWithRoles();
-
+//        $admins = $this->adminsService->getAdminsWithRoles();
+        $admins = $this->adminsService->thisAdminsWithRoles();
         return $this->view(null, compact('admins'));
     }
 
@@ -41,7 +43,7 @@ class AdminsController extends BaseController
      */
     public function create()
     {
-        $roles = $this->rolesRepository->getRoles();
+        $roles = $this->rolesRepository->thisAdminRoles();
 
         return view('admin.admins.create', compact('roles'));
     }
@@ -68,7 +70,8 @@ class AdminsController extends BaseController
     {
         $admin = $this->adminsService->ById($id);
 
-        $roles = $this->rolesRepository->getRoles();
+//        $roles = $this->rolesRepository->getRoles();
+        $roles = $this->rolesRepository->thisAdminRoles();
 
         return view('admin.admins.edit', compact('admin','roles'));
     }
@@ -165,7 +168,7 @@ class AdminsController extends BaseController
     public function logout()
     {
         $this->adminsService->logout();
-
+        RbacCheck::deleteRuleAndMenu();
         return redirect()->route('login');
     }
 }

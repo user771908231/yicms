@@ -18,6 +18,7 @@ namespace App\Repositories;
 
 
 use App\Models\Role;
+use Illuminate\Support\Facades\Auth;
 
 class RolesRepository
 {
@@ -28,5 +29,10 @@ class RolesRepository
     public function getRoles()
     {
         return Role::get();
+    }
+
+    public function thisAdminRoles()
+    {
+        return Role::where('u_id',Auth::id())->get();
     }
 }
