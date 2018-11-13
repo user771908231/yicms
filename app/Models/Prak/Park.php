@@ -79,7 +79,7 @@ class Park extends Model
     public function bill()
     {
         return $this->hasOne(Bill::class,'id','bill_id')
-            ->select('id','order_state','unit_price');
+            ->select('id','order_state','unit_price','pay_parking_time','expire_time');
     }
 
     public function user()

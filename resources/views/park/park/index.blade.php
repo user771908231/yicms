@@ -40,7 +40,7 @@
                                 <td class="text-center">{{date('Y-m-d H:i:s',$item->go_in)}}</td>
                                 <td class="text-center">
                                     @if($item->go_out)
-                                    {{App\Console\PublicFunction::Sec2Time($item->go_out-$item->go_in)}}
+                                    {{App\Console\PublicFunction::Sec2Time($item->go_out - $item->go_in)}}
                                         @endif
                                 </td>
                                 <td class="text-center">{{$item->access->unit_price }}元</td>
@@ -90,13 +90,13 @@
                                         <form class="form-common" action="{{route('park.update',$item->id)}}" method="post">
                                             {{ csrf_field() }}
                                             {{ method_field('PATCH') }}
-                                            <input type="hidden" name="type" value="0">
+                                            <input type="hidden" name="type" value="1">
                                             <button class="btn btn-primary btn-xs" type="submit"><i class="fa fa-jpy"></i> 手动缴费</button>
                                         </form>
                                         <form class="form-common" action="{{route('park.update',$item->id)}}" method="post">
                                             {{ csrf_field() }}
                                             {{ method_field('PATCH') }}
-                                            <input type="hidden" name="type" value="1">
+                                            <input type="hidden" name="type" value="0">
                                             <button class="btn btn-primary btn-xs" type="submit"><i class="fa fa-check-square-o"></i> 出库</button>
                                         </form>
                                         {{--<form class="form-common" action="{{route('park.destroy',$item->id)}}" method="post">--}}
