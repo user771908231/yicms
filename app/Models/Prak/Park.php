@@ -7,6 +7,7 @@
  */
 
 namespace App\Models\Park;
+use App\Models\Bill\Bill;
 use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Support\Facades\DB;
@@ -71,5 +72,11 @@ class Parking extends Model
 
     public static function updatedBillById($billId,$id){
         return Parking::where('id','=',$id)->update(['bill_id'=>$billId]);
+    }
+
+    public function bill()
+    {
+        $this->hasOne(Bill::class,'id','bill_id')
+            ->select('id','order_state');
     }
 }
