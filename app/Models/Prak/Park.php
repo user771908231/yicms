@@ -7,12 +7,14 @@
  */
 
 namespace App\Models\Park;
+use App\Models\Access\AccessControl;
 use App\Models\Bill\Bill;
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Support\Facades\DB;
 
-class Parking extends Model
+class Park extends Model
 {
     protected $connection='thing-eye';
     protected $table = "parking_car";
@@ -23,18 +25,18 @@ class Parking extends Model
 
     public static function getParkingByAcId($id)
     {
-        return Parking::where('ac_id','=',$id)->orderBy('id', 'DESC')->paginate(15);
+        return Park::where('ac_id','=',$id)->orderBy('id', 'DESC')->paginate(15);
     }
     public static function getAllParking()
     {
-        return Parking::select('*')->orderBy('id', 'DESC')->paginate(15);
+        return Park::select('*')->orderBy('id', 'DESC')->paginate(15);
     }
 
     public static function getParkingInfoById($id){
-        return Parking::where("id","=",$id)->first();
+        return Park::where("id","=",$id)->first();
     }
     public static function getParkingByPlate($plate){
-        return Parking::where("license_plate","=",$plate)->where('go_out','=','0')->first();
+        return Park::where("license_plate","=",$plate)->where('go_out','=','0')->first();
     }
 
     public static function removeParking(array $id){
@@ -48,7 +50,7 @@ class Parking extends Model
     }
 
     public static function getParkingByPlateOrDate($plate,$from,$to){
-        $row = Parking::when($plate, function ($query) use ($plate) {
+        $row = Park::when($plate, function ($query) use ($plate) {
                 return $query->where('license_plate', $plate);
             })->when($from, function ($query) use ($from) {
                 return $query->where('go_in','>',$from);
@@ -71,12 +73,24 @@ class Parking extends Model
     }
 
     public static function updatedBillById($billId,$id){
-        return Parking::where('id','=',$id)->update(['bill_id'=>$billId]);
+        return Park::where('id','=',$id)->update(['bill_id'=>$billId]);
     }
 
     public function bill()
     {
-        $this->hasOne(Bill::class,'id','bill_id')
-            ->select('id','order_state');
+        return $this->hasOne(Bill::class,'id','bill_id')
+            ->select('id','order_state','unit_price');
+    }
+
+    public function user()
+    {
+        return $this->hasOne(User::class,'id','user_id')
+            ->select('id','truename');
+    }
+
+    public function access()
+    {
+        return $this->hasOne(AccessControl::class,'ac_id','ac_id')
+            ->select('ac_id','ac_name','ac_address','unit_price');
     }
 }

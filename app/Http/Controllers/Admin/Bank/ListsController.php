@@ -11,7 +11,7 @@ namespace App\Http\Controllers\Admin\Bank;
 
 use App\Http\Controllers\Admin\BaseController;
 use App\Models\Bill\Bill;
-use App\Models\Park\Parking;
+use App\Models\Park\Park;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -77,12 +77,31 @@ class ListsController extends BaseController
      */
     public function update(int $id,Request $request)
     {
-//        dd($this->bill->find($id),$request->only(['type']));
+        dd(Park::getParkingInfoById($id));
         if ($request->only(['type']) == 1){
 
         }else{
-            $parking_info = Parking::getParkingInfoById($id);
-            dd($parking_info);
+            $bill = $this->bill->find($id);
+            if ($bill){
+                switch ($bill->order_state){
+                    case 0:
+                        flash('订单取消')->success()->important();
+                        return redirect()->route('lists.index');
+                        break;
+                    case 10:
+                        flash('未支付')->success()->important();
+                        return redirect()->route('lists.index');
+                        break;
+                    case 30:
+                        flash('已出库')->error()->important();
+                        return redirect()->route('lists.index');
+                        break;
+                }
+            }else{
+                flash('订单已删除')->error()->important();
+                return redirect()->route('lists.index');
+            }
+
         }
 
             flash('你无权操作')->error()->important();
@@ -91,7 +110,7 @@ class ListsController extends BaseController
 
         flash('更新成功')->success()->important();
 
-        return redirect()->route('rules.index');
+        return redirect()->route('lists.index');
     }
 
     /**

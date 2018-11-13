@@ -156,5 +156,18 @@ Route::group(['namespace' => 'Admin','prefix' => 'admin'], function (){
                 Route::resource('/household','DoorCardController');
             }
         );
+        Route::group(
+            ['namespace' => 'Park','prefix' => 'park'],
+            /**
+             * @Title :
+             * @User  : company_windows_locahost_wm
+             * @Date  : 2018/11/6
+             * @Time  : 15:16
+             */
+            function (){
+
+                Route::resource('/park','ParkController');
+            }
+        );
     });
 });
