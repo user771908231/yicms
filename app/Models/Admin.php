@@ -17,6 +17,10 @@ class Admin extends Authenticatable
 
     protected $ability;
 
+    protected $primaryKey='id';
+
+    protected $with=['attribute'];
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
@@ -42,4 +46,10 @@ class Admin extends Authenticatable
 
         return in_array($route, $rules);
     }
+
+    public function attribute()
+    {
+        return $this->hasOne(AdminAttribute::class,'admin_id','id');
+    }
+
 }

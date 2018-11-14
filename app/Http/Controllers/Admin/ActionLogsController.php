@@ -28,12 +28,22 @@ class ActionLogsController extends BaseController
         return $this->view(null,compact('actions'));
     }
 
-    public function destroy(ActionLog $actionLog)
+    /**
+     * @Title : destroy
+     * @User  : company_windows_locahost_wm
+     * @Date  : 2018/11/7
+     * @Time  : 15:53
+     * @param ActionLog $actionLog
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy(ActionLog $actionLog,int $id)
     {
-        $actionLog->delete();
-
-        flash('删除日志成功')->success()->important();
-
+        if($actionLog->getById($id)->delete()){
+            flash('删除成功')->success()->important();
+        }else{
+            flash('删除失败')->success()->important();
+        }
         return redirect()->route('actions.index');
     }
 }

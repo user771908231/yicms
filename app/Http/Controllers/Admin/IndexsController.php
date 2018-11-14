@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Auth;
 
 class IndexsController extends Controller
 {
@@ -18,6 +20,6 @@ class IndexsController extends Controller
 
     public function main()
     {
-        return view('admin.indexs.main');
+        return view('admin.indexs.main')->with('admin',Auth::user());
     }
 }
