@@ -33,7 +33,11 @@
                             <td class="text-center">{{$item->user->truename}}</td>
                             <td class="text-center">{{$item->license_plate}}</td>
                             <td class="text-center">
-                                {{$item->type}}
+                                @if($item->type == 1)
+                                    进
+                                @else
+                                    出
+                                @endif
                             </td>
                             <td class="text-center">
                                 {{mb_substr($item->time,0,4).'-'.mb_substr($item->time,4,2).'-'.mb_substr($item->time,6,2)." ".mb_substr($item->time,8,2).':'.mb_substr($item->time,10,2).':'.mb_substr($item->time,12) }}
