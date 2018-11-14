@@ -87,6 +87,7 @@
                                 {{--<td class="text-center">--}}
                                 <div class="btn-group">
                                     <td class="text-center">
+                                        <form></form>{{--防止第一行form标签隐藏 发生的报错--}}
                                         <form class="form-common" action="{{route('park.update',$item->id)}}" method="post">
                                             {{ csrf_field() }}
                                             {{ method_field('PATCH') }}
