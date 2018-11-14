@@ -22,17 +22,7 @@ class AdminAttribute extends Model
     protected $with=[
         'user',
         ];
-
-    /**
-     * @Title : name
-     * @User  : company_windows_locahost_wm
-     * @Date  : 2018/11/7
-     * @Time  : 13:48
-     */
-    public function acc()
-    {
-        return 1;
-    }
+    
 
     public function user()
     {
