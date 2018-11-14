@@ -5,7 +5,7 @@
     <title>@yield('title', config('app.name', 'Laravel'))</title>
     <meta name="keywords" content="@yield('title', config('app.name', 'Laravel'))">
     <meta name="description" content="@yield('title', config('app.name', 'Laravel'))">
-    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="shortcut icon" href="{{asset('/favicon.ico')}}">
     <link href="{{loadEdition('/admin/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{loadEdition('/admin/css/font-awesome.min.css')}}" rel="stylesheet">
     <link href="{{loadEdition('/admin/css/animate.min.css')}}" rel="stylesheet">
