@@ -93,7 +93,7 @@ class PublicFunction
         array_splice($arr,$key,1);
         return implode(",", $arr);
     }
-    
+
     public static function building($num_str,$type)
     {
         $len=strlen($num_str);
