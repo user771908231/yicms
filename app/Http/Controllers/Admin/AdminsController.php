@@ -66,12 +66,17 @@ class AdminsController extends BaseController
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit($id)
+    public function edit(int $id,Request $request)
     {
         $admin = $this->adminsService->ById($id);
-
+        $val = $request->only('this');
 //        $roles = $this->rolesRepository->getRoles();
+
         $roles = $this->rolesRepository->thisAdminRoles();
+        if (count($val)){
+            $admin->This = $val['this'];
+            return view('admin.admins.edit', compact('admin','roles'));
+        }
 
         return view('admin.admins.edit', compact('admin','roles'));
     }
@@ -83,6 +88,21 @@ class AdminsController extends BaseController
      */
     public function update(AdminRequest $request,$id)
     {
+        $this->adminsService->update($request,$id);
+
+        flash('更新资料成功')->success()->important();
+
+        if ($request->has('This')){
+            $admin = $this->adminsService->ById($id);
+            $admin->This = $request->all()['This'];
+            return view('admin.admins.edit', compact('admin','roles'));
+        }
+        return redirect()->route('admins.index');
+    }
+
+    public function updates(Request $request,int  $id)
+    {
+        dd($request,$id);
         $this->adminsService->update($request,$id);
 
         flash('更新资料成功')->success()->important();

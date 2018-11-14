@@ -92,7 +92,15 @@ class AdminsService
         }
 
         if (isset($datas['password'])) {
-            $datas['password'] = Hash::make($request->password);
+            if (Hash::check($datas['password'],$admin->password)){
+                unset($datas['password']);
+            }else{
+                if ($datas['password']== $admin->password){
+                    unset($datas['password']);
+                }else{
+                    $datas['password'] = Hash::make($request->password);
+                }
+            }
         } else {
             unset($datas['password']);
         }
@@ -100,7 +108,10 @@ class AdminsService
         $admin->update($datas);
 
         //更新关联表数据
-        $admin->roles()->sync($request->role_id);
+        if(count($request->role_id)){
+            $admin->roles()->sync($request->role_id);
+        }
+
 
         return $admin;
     }

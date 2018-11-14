@@ -23,22 +23,33 @@ class AdminRequest extends FormRequest
      */
     public function rules()
     {
+
         if(request()->method() == 'POST')
         {
-            return [
-                'name'     => 'required|between:3,10',
-                'password' => 'required',
-                'avatr'    => 'image|mimes:jpeg,bmp,png,gif',
-                'role_id'  => 'required:integer',
-                'status'   => 'required:integer',
-            ];
+
+                return [
+                    'name' => 'required|between:3,10',
+                    'password' => 'required',
+                    'avatr' => 'image|mimes:jpeg,bmp,png,gif',
+                    'role_id' => 'required:integer',
+                    'status' => 'required:integer',
+                ];
+
         }else{
-            return [
+            if (request()->has('This')){
+                return [
                 'name'     => 'required|between:3,10',
                 'avatr'    => 'image|mimes:jpeg,bmp,png,gif',
-                'role_id'  => 'required:integer',
-                'status'   => 'required:integer',
-            ];
+//                'password' => 'string|between:6,100',
+                ];
+            }else {
+                return [
+                    'name' => 'required|between:3,10',
+                    'avatr' => 'image|mimes:jpeg,bmp,png,gif',
+                    'role_id' => 'required:integer',
+                    'status' => 'required:integer',
+                ];
+            }
         }
     }
 
