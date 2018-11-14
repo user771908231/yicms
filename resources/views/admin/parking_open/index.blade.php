@@ -33,10 +33,10 @@
                             <td class="text-center">{{$item->user->truename}}</td>
                             <td class="text-center">{{$item->license_plate}}</td>
                             <td class="text-center">
-                                @if($item->type == 1)
-                                    进
-                                @else
+                                @if($item->is_out == 1)
                                     出
+                                @else
+                                    进
                                 @endif
                             </td>
                             <td class="text-center">
