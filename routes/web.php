@@ -125,6 +125,8 @@ Route::group(['namespace' => 'Admin','prefix' => 'admin'], function (){
                  * 停车设置
                  */
                 Route::resource('/parksetup','ParkingSetUpController');
+
+                Route::resource('/parking-lot','ParkingLotController');
             }
         );
             /**

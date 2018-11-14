@@ -11,17 +11,19 @@ namespace App\Http\Controllers\Admin\Parking;
 
 use App\Http\Controllers\Admin\BaseController;
 use App\Models\Open\OpenRecord;
+use App\Models\ParkingLot\Garage;
 use Illuminate\Support\Facades\Auth;
 
-class ParkingController extends BaseController
+class ParkingLotController extends BaseController
 {
     public function index()
     {
-//        sleep(5);
+//        dd(Auth::user());
+        $lists = Garage::getGarageByAc(Auth::user()->attribute->ac_id);
 //        $lists = Auth::user()->attribute->openRecord()->orderBy('time', 'desc')->paginate(20);
-        $lists = OpenRecord::getLists(Auth::user()->attribute->ac_id);
-        return view('admin.parking_open.index')
-                ->with('lists',$lists);
+//        $lists = OpenRecord::getLists(Auth::user()->attribute->ac_id);
+//        dd($this->view(),$lists);
+        return $this->view()->with('lists',$lists);
     }
 
     public function create()
