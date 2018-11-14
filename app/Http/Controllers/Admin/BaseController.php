@@ -19,12 +19,12 @@ class BaseController extends Controller
     public function view($view = null, $data = [], $mergeData = [])
     {
         $currentAction = $this->getCurrentAction();
+
         /**获取当前模块名称**/
         $module = $this->getModule();
         $controller = $currentAction['controller'];
         $action = $view ? $view : $currentAction['action'];
         $view_path = "{$module}.{$controller}.{$action}";
-
         return view($view_path, $data, $mergeData);
     }
 

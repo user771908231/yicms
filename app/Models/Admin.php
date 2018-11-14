@@ -37,6 +37,7 @@ class Admin extends Authenticatable
     public function hasRule($route)
     {
         /**获取当前用户的用户组*/
+
         if(in_array(1,$this->roles->pluck('id')->toArray()))
         {
             return true;
@@ -51,5 +52,6 @@ class Admin extends Authenticatable
     {
         return $this->hasOne(AdminAttribute::class,'admin_id','id');
     }
+
 
 }
