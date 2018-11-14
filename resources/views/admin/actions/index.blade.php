@@ -23,11 +23,17 @@
                         @if($item->type == 1)
                         <tr>
                             <td class="text-center">{{$item->id}}</td>
-                            <td class="text-center">{{$item->admin->name}}</td>
                             <td class="text-center">
+                                @if($item->admin)
+                                {{$item->admin->name}}
+                                @endif
+                            </td>
+                            <td class="text-center">
+                                @if($item->admin)
                                 @foreach($item->admin->roles as $role)
                                     {{$role->name}}
                                 @endforeach
+                                @endif
                             </td>
                             <td>{{$item->data['action']}}</td>
                             <td class="text-center">{{$item->data['ip']}}<br>来自：{{$item->data['address']}}</td>
