@@ -45,7 +45,6 @@ trait RbacCheck
 
             /**获得当前用户所有权限路由*/
             $permissions = array_unique($permissions);
-
             /**将权限路由存入缓存中*/
             Cache::tags(['rbac', 'rules'])->forever($cache_key, $permissions);
         }
@@ -74,7 +73,9 @@ trait RbacCheck
 
                 foreach ($this->roles as $role)
                 {
+
                     $rules = array_merge($rules, $role->rulesPublic()->toArray());
+
                 }
 
                 if($rules)
@@ -91,6 +92,25 @@ trait RbacCheck
         $rules = Cache::tags(['rbac', 'menus'])->get($menu_cache);
 
         return Tree::array_tree($rules);
+    }
+
+    public function thisRoleMenu()
+    {
+        $cache_key = $this->id . $this->cache_key;
+
+        if(!Cache::tags(['rbac', 'rules_obj'])->has($cache_key))
+        {
+            $permissions = new \stdClass();
+
+            foreach ($this->roles as $role) {
+                $permissions = $role->rules()->get();
+            }
+
+            /**将权限路由存入缓存中*/
+            Cache::tags(['rbac', 'rules_obj'])->forever($cache_key, $permissions);
+        }
+
+        return Cache::tags(['rbac', 'rules_obj'])->get($cache_key);
     }
 
     /**

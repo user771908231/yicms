@@ -18,6 +18,7 @@ namespace App\Services;
 
 use App\Handlers\Tree;
 use App\Repositories\RulesRepository;
+use Illuminate\Support\Facades\Auth;
 
 class RulesService
 {
@@ -63,7 +64,11 @@ class RulesService
      */
     public function getRulesTree()
     {
-        $rules = $this->rulesRepository->getRules()->toArray();
+        if (Auth::id() == 1){
+            $rules = $this->rulesRepository->getRules()->toArray();
+        }else{
+            $rules = Auth::user()->thisRoleMenu()->toArray();
+        }
         return Tree::tree($rules,'name','id','parent_id');
     }
 }
