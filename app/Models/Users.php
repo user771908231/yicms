@@ -156,4 +156,55 @@ class Users extends Model
         return $row;
     }
 
+    public static function getAllByKeywords($keywords){
+        $row = User::select('id', 'truename', 'avatar', 'homeID', 'phone', 'companyID', 'reg_time', 'is_lock', 'lock_property', 'gender', 'is_verify', 'verify_type', 'od_passwd')
+            ->where('truename','like','%'.$keywords.'%')
+            ->orwhere('phone','like','%'.$keywords.'%')
+            ->orderBy('id', 'DESC')
+            ->paginate(15);
+        $row->appends(['keywords'=>$keywords])->links();
+        return $row;
+    }
+
+    /**
+     * 超级管理获取所有用户
+     * @return mixed
+     */
+    public static function lists()
+    {
+
+        $row = DB::table('users')
+            ->select('id', 'truename', 'avatar', 'homeID', 'phone', 'companyID', 'reg_time', 'is_lock', 'lock_property', 'gender', 'is_verify', 'verify_type', 'od_passwd')
+            ->orderBy('id', 'DESC')
+            ->paginate(15);
+        return $row;
+    }
+
+    /**
+     * 更具小区id获取某小区的所有用户
+     * @param $acId
+     */
+    public static function getCommunityUserByAcIda($acId,$num=15){
+//        DB::connection()->enableQueryLog(); // 开启查询日志
+//        DB::table('users'); // 要查看的sql
+        if ($num == 0){
+            $row =Users::select('id', 'truename', 'avatar', 'client_id','homeID', 'phone', 'have_doorID', 'reg_time', 'is_lock', 'lock_property', 'gender', 'is_verify', 'verify_type', 'od_passwd')
+                ->orwhere('have_doorID','like','%'.$acId)
+                ->orwhere('have_doorID','like','%'.$acId.'%')
+                ->orwhere('have_doorID','like',$acId.'%')
+                ->orderBy('id', 'DESC')
+                ->get();
+        }else{
+            $row =Users::select('id', 'truename', 'avatar', 'client_id','homeID', 'phone', 'have_doorID', 'reg_time', 'is_lock', 'lock_property', 'gender', 'is_verify', 'verify_type', 'od_passwd')
+                ->orwhere('have_doorID','like','%'.$acId)
+                ->orwhere('have_doorID','like','%'.$acId.'%')
+                ->orwhere('have_doorID','like',$acId.'%')
+                ->orderBy('id', 'DESC')
+                ->paginate(15);
+        }
+//        $queries = DB::getQueryLog(); // 获取查询日
+//        print_r($queries); // 即可查看执行的sql，传
+        return $row;
+    }
+
 }
