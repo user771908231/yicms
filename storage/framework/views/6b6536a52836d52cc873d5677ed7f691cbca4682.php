@@ -42,6 +42,7 @@
                         <?php endif; ?>
                     </td>
                     <td class="text-center">
+                        <form></form>
                         <a href="<?php echo e(route('rules.edit',$item['id'])); ?>">
                             <button class="btn btn-primary btn-xs" type="button"><i class="fa fa-paste"></i> 修改</button>
                         </a>
