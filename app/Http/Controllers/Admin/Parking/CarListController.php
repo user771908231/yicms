@@ -10,6 +10,7 @@ namespace App\Http\Controllers\Admin\Parking;
 
 
 use App\Http\Controllers\Admin\BaseController;
+use App\Models\Car\GarageApply;
 use App\Models\Open\OpenRecord;
 use App\Models\ParkingLot\Garage;
 use App\Models\Users;
@@ -28,18 +29,38 @@ class CarListController extends BaseController
 
     public function index()
     {
-        $ac_id = Auth::user()->attribute->ac_id;
-        if ($_GET){
-            if (isset( $_GET['keywords'])){
-                $lists = Garage::getInfoByKeywords($_GET['keywords'],$ac_id);
-            }else{
-                $lists = Garage::getGarageByAc($ac_id);
-            }
-        }else{
-            $lists = Garage::getGarageByAc($ac_id);
+        $ac_info = Auth::user()->attribute->with('accessControl')->first();
+//        dd($ac_info->accessControl);
+//        $ac_info->accessControl->ac_type
+        $keywords = '';
+        if($_GET){
+            if (isset($_GET['keywords']))$keywords = $_GET['keywords'];
         }
-
-        return $this->view()->with(['lists'=>$lists,'ac_id'=>$ac_id]);
+        switch (2){
+            case 0:
+//                $lists = GarageApply::index();
+                $lists = $this->users
+                    ->select('id', 'truename', 'avatar', 'client_id','homeID', 'phone', 'have_doorID', 'reg_time', 'is_lock', 'lock_property', 'gender', 'is_verify', 'verify_type', 'od_passwd')
+                    ->where('truename','like','%'.$keywords.'%')
+                    ->orWhere('phone','like','%'.$keywords.'%')
+                    ->with(['car'=>function ($q) use ($keywords){
+                        $q->Where('license_plate','like','%'.$keywords.'%');
+                    }])
+//                    ->whereHas('car',function($query) use ($keywords){
+//                        $query->Where('license_plate','like','%'.$keywords.'%');
+//                    })
+                    ->with('car')
+                    ->orderBy('id', 'DESC')
+                    ->paginate(15);
+                break;
+            case 1:
+                $lists = Users::getCommunityUserByAcId($ac_info->ac_id,$keywords,20);
+                break;
+            case 2:
+                $lists = Users::getCompanyUserByAcId($ac_info->ac_id,$keywords,20);
+                break;
+        }
+        return $this->view()->with('lists',$lists);
     }
 
     public function create()

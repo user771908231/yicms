@@ -41,7 +41,6 @@ class AdminAttribute extends Model
 
     public function accessControl()
     {
-        sleep(5);
         return $this->hasOne(AccessControl::class,'ac_id','ac_id');
     }
 }
