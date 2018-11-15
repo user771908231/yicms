@@ -58,6 +58,7 @@
                             {{--<td class="text-center">--}}
                                 <div class="btn-group">
                                     <td class="text-center">
+                                        <form></form>
                                         <form class="form-common" action="{{route('household.update',$item->id)}}" method="post">
                                             <input type="hidden" name="state" value="1">
                                             {{ csrf_field() }}

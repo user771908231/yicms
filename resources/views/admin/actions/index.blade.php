@@ -37,6 +37,7 @@
                             <td class="text-center">{{$item->data['ip']}}<br>来自：{{$item->data['address']}}</td>
                             <td class="text-center">{{$item->created_at->diffForHumans()}}</td>
                             <td class="text-center">
+                                <form></form>
                                 <form class="form-common" action="{{route('actions.destroy',$item->id)}}" method="post">
                                     {{ csrf_field() }}
                                     {{ method_field('DELETE') }}

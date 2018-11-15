@@ -6,6 +6,7 @@
             <h5>用户管理</h5>
         </div>
         <div class="ibox-content">
+            <form></form>
             <a class="menuid btn btn-primary btn-sm" href="javascript:history.go(-1)">返回</a>
             <a href="{{route('parking-lot.create')}}" link-url="javascript:void(0)"><button class="btn btn-primary btn-sm" type="button"><i class="fa fa-plus-circle"></i> 添加</button></a>
             <form method="get" action="{{route('parking-lot.index')}}" class="form-horizontal m-t-md" >

@@ -80,6 +80,7 @@
                             {{--<td class="text-center">--}}
                                 <div class="btn-group">
                                     <td class="text-center">
+                                        <form></form>
                                         {{--<form class="form-common" action="{{route('lists.update',$item->id)}}" method="post">--}}
                                             {{--{{ csrf_field() }}--}}
                                             {{--{{ method_field('PATCH') }}--}}

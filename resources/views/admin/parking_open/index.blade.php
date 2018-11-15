@@ -55,6 +55,7 @@
                             {{--<td class="text-center">--}}
                                 <div class="btn-group">
                                     <td class="text-center">
+                                        <form></form>
                                         <form class="form-common" action="{{route('parking.destroy',$item->v_id)}}" method="post">
                                             {{ csrf_field() }}
                                             {{ method_field('DELETE') }}
