@@ -9,6 +9,7 @@
 namespace App\Models;
 
 
+use App\Models\Access\AccessControl;
 use App\Models\Open\OpenRecordOld;
 use App\Models\Open\OpenRecord;
 use Illuminate\Database\Eloquent\Model;
@@ -19,10 +20,14 @@ class AdminAttribute extends Model
 
     protected $primaryKey="id";
 
+<<<<<<< HEAD
     protected $with=[
         'user',
         ];
     
+=======
+//    protected $with=['user','accessControl'];
+>>>>>>> dev_wm
 
     public function user()
     {
@@ -39,5 +44,10 @@ class AdminAttribute extends Model
     {
         sleep(5);
         return $this->hasMany(OpenRecordOld::class,'ac_id','ac_id');
+    }
+
+    public function accessControl()
+    {
+        return $this->hasOne(AccessControl::class,'ac_id','ac_id');
     }
 }

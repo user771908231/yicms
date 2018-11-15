@@ -11,7 +11,7 @@ class Admin extends Authenticatable
     use Notifiable;
     use RbacCheck;
 
-    protected $fillable = ['name', 'password', 'avatr', 'login_count', 'create_ip', 'last_login_ip', 'status'];
+    protected $fillable = ['name', 'password', 'avatr', 'login_count', 'create_ip', 'last_login_ip', 'status','pid','is_top'];
 
     protected $rememberTokenName = '';
 

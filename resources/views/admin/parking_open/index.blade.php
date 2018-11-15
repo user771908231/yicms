@@ -33,7 +33,11 @@
                             <td class="text-center">{{$item->user->truename}}</td>
                             <td class="text-center">{{$item->license_plate}}</td>
                             <td class="text-center">
-                                {{$item->type}}
+                                @if($item->is_out == 1)
+                                    出
+                                @else
+                                    进
+                                @endif
                             </td>
                             <td class="text-center">
                                 {{mb_substr($item->time,0,4).'-'.mb_substr($item->time,4,2).'-'.mb_substr($item->time,6,2)." ".mb_substr($item->time,8,2).':'.mb_substr($item->time,10,2).':'.mb_substr($item->time,12) }}
@@ -51,6 +55,7 @@
                             {{--<td class="text-center">--}}
                                 <div class="btn-group">
                                     <td class="text-center">
+                                        <form></form>
                                         <form class="form-common" action="{{route('parking.destroy',$item->v_id)}}" method="post">
                                             {{ csrf_field() }}
                                             {{ method_field('DELETE') }}

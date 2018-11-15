@@ -9,7 +9,7 @@
             <a class="menuid btn btn-primary btn-sm" href="javascript:history.go(-1)">返回</a>
             <a href="{{route('admins.index')}}"><button class="btn btn-primary btn-sm" type="button"><i class="fa fa-plus-circle"></i> 管理员管理</button></a>
             <div class="hr-line-dashed m-t-sm m-b-sm"></div>
-            <form class="form-horizontal m-t-md" action="{{ route('admins.update',$admin->id) }}" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
+            <form class="form-horizontal m-t-md" action=" {{ route('admins.update',$admin->id) }}" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
                 {!! csrf_field() !!}
                 {{method_field('PATCH')}}
                 <div class="form-group">
@@ -25,7 +25,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">密码：</label>
                     <div class="input-group col-sm-2">
-                        <input type="password" class="form-control" name="password">
+                        <input type="password" class="form-control" name="password" >
                         @if ($errors->has('password'))
                             <span class="help-block m-b-none"><i class="fa fa-info-circle"></i>{{$errors->first('password')}}</span>
                         @endif
@@ -45,6 +45,7 @@
                     </div>
                 </div>
                 <div class="hr-line-dashed m-t-sm m-b-sm"></div>
+                @if(!$admin->This)
                 <div class="form-group">
                     <label class="col-sm-2 control-label">所属角色：</label>
                     <div class="input-group col-sm-2">
@@ -72,6 +73,22 @@
                         @endif
                     </div>
                 </div>
+                <div class="hr-line-dashed m-t-sm m-b-sm"></div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">是否可创建下级管理：</label>
+                    <div class="input-group col-sm-1">
+                        <select class="form-control" name="is_top">
+                            <option value="0" @if(!$admin->is_top) selected="selected" @endif>否</option>
+                            <option value="1" @if($admin->is_top) selected="selected" @endif>是</option>
+                        </select>
+                        @if ($errors->has('is_top'))
+                            <span class="help-block m-b-none"><i class="fa fa-info-circle"></i>{{$errors->first('is_top')}}</span>
+                        @endif
+                    </div>
+                </div>
+                @else
+                <input type="hidden"  name="This" value="1">
+                @endif
                 <div class="hr-line-dashed m-t-sm m-b-sm"></div>
                 <div class="form-group">
                     <div class="col-sm-12 col-sm-offset-2">

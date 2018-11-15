@@ -48,7 +48,7 @@ class OpenRecord extends Model
 
     public function user()
     {
-        sleep(5);
+//        sleep(5);
         return $this->hasOne(Users::class,'id','user_id')->select('id','truename');
     }
 

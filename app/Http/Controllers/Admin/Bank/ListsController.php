@@ -11,6 +11,7 @@ namespace App\Http\Controllers\Admin\Bank;
 
 use App\Http\Controllers\Admin\BaseController;
 use App\Models\Bill\Bill;
+use App\Models\Park\Park;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -74,18 +75,42 @@ class ListsController extends BaseController
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(RuleRequest $request, $id)
+    public function update(int $id,Request $request)
     {
-        $rule = $this->bill->ById($id);
-        if(is_null($rule))
-        {
-            flash('你无权操作')->error()->important();
+        dd(Park::getParkingInfoById($id));
+        if ($request->only(['type']) == 1){
+
+        }else{
+            $bill = $this->bill->find($id);
+            if ($bill){
+                switch ($bill->order_state){
+                    case 0:
+                        flash('订单取消')->success()->important();
+                        return redirect()->route('lists.index');
+                        break;
+                    case 10:
+                        flash('未支付')->success()->important();
+                        return redirect()->route('lists.index');
+                        break;
+                    case 30:
+                        flash('已出库')->error()->important();
+                        return redirect()->route('lists.index');
+                        break;
+                }
+            }else{
+                flash('订单已删除')->error()->important();
+                return redirect()->route('lists.index');
+            }
+
         }
 
-        $rule->update($request->all());
+            flash('你无权操作')->error()->important();
+
+
+
         flash('更新成功')->success()->important();
 
-        return redirect()->route('rules.index');
+        return redirect()->route('lists.index');
     }
 
     /**

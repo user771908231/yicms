@@ -20,8 +20,30 @@ class UsersController extends BaseController
 
     public function index()
     {
-            return view('admin.user.index')
-                ->with('lists',Auth::user()->attribute->user()->orderBy('id', 'desc')->paginate(20));
+        $admin_info = Auth::user();
+        $ac_id =$admin_info->attribute->ac_id;
+//        dd($admin_info);
+        if ($admin_info->id == 0){
+            if (isset( $_GET['keywords'])&&$_GET['keywords']){
+                $keywords = $_GET['keywords'];
+                $lists = Users::getAllByKeywords($keywords);
+            }else{
+                $lists = Users::lists();
+            }
+
+        }else{
+            if (isset( $_GET['keywords'])&&$_GET['keywords']){
+                $keywords = $_GET['keywords'];
+                $lists = Users::getCommunityUserByAcIdAndKeywords($ac_id,$keywords);
+            }else{
+                $lists = Users::getCommunityUserByAcIda($ac_id);
+            }
+
+        }
+//        return view('admin.user.index')
+//                ->with('lists',Auth::user()->attribute->user()->orderBy('id', 'desc')->paginate(20));
+        return view('admin.user.index')
+                ->with('lists',$lists);
     }
 
     public function create()

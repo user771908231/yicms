@@ -17,7 +17,7 @@ class ParkingController extends BaseController
 {
     public function index()
     {
-        sleep(5);
+//        sleep(5);
 //        $lists = Auth::user()->attribute->openRecord()->orderBy('time', 'desc')->paginate(20);
         $lists = OpenRecord::getLists(Auth::user()->attribute->ac_id);
         return view('admin.parking_open.index')
@@ -29,7 +29,7 @@ class ParkingController extends BaseController
 
     }
 
-    public function update()
+    public function update(int $id)
     {
 
     }

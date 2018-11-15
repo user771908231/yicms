@@ -125,6 +125,12 @@ Route::group(['namespace' => 'Admin','prefix' => 'admin'], function (){
                  * 停车设置
                  */
                 Route::resource('/parksetup','ParkingSetUpController');
+
+                Route::resource('/parking-lot','ParkingLotController');
+
+                Route::post('/parking-lot/search','ParkingLotController@search')->name('parking-lot.search');
+
+                Route::resource('/car-list','CarListController');
             }
         );
             /**
@@ -141,6 +147,32 @@ Route::group(['namespace' => 'Admin','prefix' => 'admin'], function (){
             function (){
 
                 Route::resource('/dot','DotController');
+            }
+        );
+        Route::group(
+            ['namespace' => 'Card','prefix' => 'card'],
+            /**
+             * @Title :
+             * @User  : company_windows_locahost_wm
+             * @Date  : 2018/11/6
+             * @Time  : 15:16
+             */
+            function (){
+
+                Route::resource('/household','DoorCardController');
+            }
+        );
+        Route::group(
+            ['namespace' => 'Park','prefix' => 'park'],
+            /**
+             * @Title :
+             * @User  : company_windows_locahost_wm
+             * @Date  : 2018/11/6
+             * @Time  : 15:16
+             */
+            function (){
+
+                Route::resource('/park','ParkController');
             }
         );
     });

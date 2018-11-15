@@ -23,22 +23,33 @@ class AdminRequest extends FormRequest
      */
     public function rules()
     {
+
         if(request()->method() == 'POST')
         {
-            return [
-                'name'     => 'required|between:3,10',
-                'password' => 'required',
-                'avatr'    => 'max:128',
-                'role_id'  => 'required:integer',
-                'status'   => 'required:integer',
-            ];
+
+                return [
+                    'name' => 'required|between:3,10',
+                    'password' => 'required',
+                    'avatr' => 'image|mimes:jpeg,bmp,png,gif',
+                    'role_id' => 'required:integer',
+                    'status' => 'required:integer',
+                ];
+
         }else{
-            return [
+            if (request()->has('This')){
+                return [
                 'name'     => 'required|between:3,10',
-                'avatr'    => 'max:128',
-                'role_id'  => 'required:integer',
-                'status'   => 'required:integer',
-            ];
+                'avatr'    => 'image|mimes:jpeg,bmp,png,gif',
+//                'password' => 'string|between:6,100',
+                ];
+            }else {
+                return [
+                    'name' => 'required|between:3,10',
+                    'avatr' => 'image|mimes:jpeg,bmp,png,gif',
+                    'role_id' => 'required:integer',
+                    'status' => 'required:integer',
+                ];
+            }
         }
     }
 
@@ -52,7 +63,7 @@ class AdminRequest extends FormRequest
             'name.required'     => '用户名不能为空',
             'name.between'      => '用户名长度应该在3~10位之间',
             'password.required' => '密码不能为空',
-            'avatr.max'         => '头像不能超过128个字符',
+            'avatr.image'         => '头像必须是jpeg,bmp,png,gif类型',
             'role_id.required'  => '用户所属角色不能为空',
             'role_id.integer'   => '表单不合法',
             'status.required'   => '状态不能为空',

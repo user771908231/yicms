@@ -22,9 +22,10 @@
 
                     @foreach($actions as $key => $item)
                         @if($item->type == 1)
-{{--                            {{dd($item)}}--}}
-                        <tr>
+{{--{{--                            {{dd($item)}}--}}
+<tr>
                             <td class="text-center">{{$item->id}}</td>
+<<<<<<< HEAD
                             <td class="text-center">
                                 @if($item->admin)
                                 {{$item->admin->name}}
@@ -32,6 +33,11 @@
                             </td>
                             <td class="text-center">
                                 @if($item->admin)
+=======
+                            <td class="text-center">@if($item->admin){{$item->admin->name}}@endif</td>
+                            <td class="text-center">
+                                @if($item->admin)
+>>>>>>> dev_wm
                                 @foreach($item->admin->roles as $role)
                                     {{$role->name}}
                                 @endforeach
@@ -41,6 +47,7 @@
                             <td class="text-center">{{$item->data['ip']}}<br>来自：{{$item->data['address']}}</td>
                             <td class="text-center">{{$item->created_at->diffForHumans()}}</td>
                             <td class="text-center">
+                                <form></form>
                                 <form class="form-common" action="{{route('actions.destroy',$item->id)}}" method="post">
                                     {{ csrf_field() }}
                                     {{ method_field('DELETE') }}
