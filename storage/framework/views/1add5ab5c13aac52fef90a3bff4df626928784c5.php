@@ -36,6 +36,7 @@
                             <div class="btn-group">
                                 <a href="<?php echo e(route('roles.access',$item->id)); ?>"><button class="btn btn-primary btn-xs" type="button"><i class="fa fa-paste"></i> 权限设置</button></a>
                                 <a href="<?php echo e(route('roles.edit',$item->id)); ?>"><button class="btn btn-primary btn-xs" type="button"><i class="fa fa-paste"></i> 修改</button></a>
+                                <form></form>
                                 <form class="form-common" action="<?php echo e(route('roles.destroy', $item->id)); ?>" method="post">
                                     <?php echo e(csrf_field()); ?>
 

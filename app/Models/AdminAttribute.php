@@ -20,14 +20,9 @@ class AdminAttribute extends Model
 
     protected $primaryKey="id";
 
-<<<<<<< HEAD
-    protected $with=[
-        'user',
-        ];
-    
-=======
+
 //    protected $with=['user','accessControl'];
->>>>>>> dev_wm
+
 
     public function user()
     {

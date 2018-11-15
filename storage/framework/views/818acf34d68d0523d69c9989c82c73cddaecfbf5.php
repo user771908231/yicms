@@ -24,9 +24,20 @@
 
 <tr>
                             <td class="text-center"><?php echo e($item->id); ?></td>
+<<<<<<< HEAD
+                            <td class="text-center">
+                                <?php if($item->admin): ?>
+                                <?php echo e($item->admin->name); ?>
+
+                                <?php endif; ?>
+                            </td>
+                            <td class="text-center">
+                                <?php if($item->admin): ?>
+=======
                             <td class="text-center"><?php if($item->admin): ?><?php echo e($item->admin->name); ?><?php endif; ?></td>
                             <td class="text-center">
                                 <?php if($item->admin): ?>
+>>>>>>> dev_wm
                                 <?php $__currentLoopData = $item->admin->roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <?php echo e($role->name); ?>
 
@@ -37,6 +48,7 @@
                             <td class="text-center"><?php echo e($item->data['ip']); ?><br>来自：<?php echo e($item->data['address']); ?></td>
                             <td class="text-center"><?php echo e($item->created_at->diffForHumans()); ?></td>
                             <td class="text-center">
+                                <form></form>
                                 <form class="form-common" action="<?php echo e(route('actions.destroy',$item->id)); ?>" method="post">
                                     <?php echo e(csrf_field()); ?>
 
