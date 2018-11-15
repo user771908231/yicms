@@ -127,6 +127,8 @@ Route::group(['namespace' => 'Admin','prefix' => 'admin'], function (){
                 Route::resource('/parksetup','ParkingSetUpController');
 
                 Route::resource('/parking-lot','ParkingLotController');
+
+                Route::post('/parking-lot/search','ParkingLotController@search')->name('parking-lot.search');
             }
         );
             /**

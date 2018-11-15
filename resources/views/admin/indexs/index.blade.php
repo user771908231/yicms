@@ -34,6 +34,8 @@
 <script src="{{loadEdition('/admin/js/plugins/pace/pace.min.js')}}"></script>
 <script src="{{loadEdition('/admin/js/content.min.js')}}"></script>
 <script src="{{loadEdition('/js/dialog/artdialog.js')}}"></script>
+{{--@section('custom-js')--}}
+{{--@show--}}
 @yield('js')
 <script>
     $(function(){$("#side-menu").metisMenu();})
