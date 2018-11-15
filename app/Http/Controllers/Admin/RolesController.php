@@ -18,7 +18,7 @@ class RolesController extends BaseController
      */
     public function index(Role $role)
     {
-        $roles = $role->thisUser()->paginate(10);
+        $roles = $role->thisUser()->paginate(20);
 
         return $this->view(null,compact('roles'));
     }
@@ -97,9 +97,11 @@ class RolesController extends BaseController
      */
     public function access(Role $role,RulesRepository $rulesRepository,Tree $tree)
     {
-        $rules = $rulesRepository->getRules();
 
-        $datas = $tree::channelLevel($rules, 0, '&nbsp;', 'id','parent_id');
+        $rules = $rulesRepository->getRules();
+//        dd(Auth::user()->thisRoleMenu(),$rules);
+
+        $datas = $tree::channelLevel(Auth::user()->thisRoleMenu(), 0, '&nbsp;', 'id','parent_id');
 
         $rules = $role->rules->pluck('id')->toArray();
 
