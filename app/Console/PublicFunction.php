@@ -144,4 +144,41 @@ class PublicFunction
         }
     }
 
+    /**
+     * @Title : byKeyReitem
+     * @User  : company_windows_locahost_wm
+     * @Date  : 2018/11/16
+     * @Time  : 16:44
+     * @param $arr
+     * @param $key
+     * @return mixed
+     */
+    public static function byKeyReitem($arr, $key){
+        if(!array_key_exists($key, $arr)){
+            return $arr;
+        }
+        $keys = array_keys($arr);
+        $index = array_search($key, $keys);
+        if($index !== FALSE){
+            array_splice($arr, $index, 1);
+        }
+        return $arr;
+
+    }
+
+
+    public static function arrayRemove($data, $key){
+        if(!array_key_exists($key, $data)){
+            return $data;
+        }
+        $keys = array_keys($data);
+        $index = array_search($key, $keys);
+        if($index !== FALSE){
+            array_splice($data, $index, 1);
+        }
+        return $data;
+
+
+
+    }
 }

@@ -54,9 +54,13 @@ class AdminsController extends BaseController
      */
     public function store(AdminRequest $request)
     {
-        $this->adminsService->create($request);
+        if(Auth::user()->is_top){
+            $this->adminsService->create($request);
 
-        flash('添加管理员成功')->success()->important();
+            flash('添加管理员成功')->success()->important();
+        }else{
+            flash('没有创建下级管理权限')->success()->important();
+        }
 
         return redirect()->route('admins.index');
     }

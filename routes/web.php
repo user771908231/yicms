@@ -177,5 +177,18 @@ Route::group(['namespace' => 'Admin','prefix' => 'admin'], function (){
                 Route::resource('/park','ParkController');
             }
         );
+            Route::group(
+                ['namespace' => 'Merchant','prefix' => 'merchant'],
+                /**
+                 * @Title :
+                 * @User  : company_windows_locahost_wm
+                 * @Date  : 2018/11/6
+                 * @Time  : 15:16
+                 */
+                function (){
+
+                    Route::resource('/merchant','MerchantController');
+                }
+            );
     });
 });

@@ -77,6 +77,18 @@
                             <?php endif; ?>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">商户身份：</label>
+                        <div class="input-group col-sm-1">
+                            <select class="form-control" name="stop_up">
+                                <option value="0" <?php if(old('stop_up') == 0): ?> selected="selected" <?php endif; ?>>否</option>
+                                <option value="1" <?php if(old('stop_up') == 1): ?> selected="selected" <?php endif; ?>>是</option>
+                            </select>
+                            <?php if($errors->has('is_top')): ?>
+                                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i><?php echo e($errors->first('is_top')); ?></span>
+                            <?php endif; ?>
+                        </div>
+                    </div>
                     <div class="hr-line-dashed m-t-sm m-b-sm"></div>
                     <div class="form-group">
                         <div class="col-sm-12 col-sm-offset-2">

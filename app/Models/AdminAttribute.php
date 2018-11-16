@@ -20,7 +20,7 @@ class AdminAttribute extends Model
 
     protected $primaryKey="id";
 
-    protected $fillable=['admin_id','pid','ac_id','stop_up'];
+    protected $fillable=['admin_id','pid','ac_id','stop_up','park_number','park_type','park_time'];
 
 //    protected $with=['user','accessControl'];
 

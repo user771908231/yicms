@@ -74,14 +74,27 @@ class ParkingLotController extends BaseController
     {
         $val = $request->only(['phone','number']);
         $user = $this->users->where('phone','=',$val['phone'])->first();
-        $ac_id = Auth::user()->attribute->ac_id;
+        $attribute = Auth::user()->attribute;
         $doorArr = explode(',',$user->have_doorID);
-        $result = array_search($ac_id,$doorArr);
+        $result = array_search($attribute->ac_id,$doorArr);
+        //判断子商户 和是否有车位
+//        dd($attribute);
+        if ($attribute->admin_id != $attribute->pid)
+        {
+            if ($attribute->is_park_number == 0)
+            {
+                flash('添加失败,没有可添加的车位了')->error()->important();
+                return  redirect()->route('parking-lot.create');
+            }
+            $attribute->decrement('is_park_number');
+        }
+
+        if(!($attribute->stop_up == 1) ){
         if ($result === false){
             flash('添加失败')->error()->important();
             return  redirect()->route('parking-lot.create');
-        }
-        $garageInfo = Garage::getInfoById($user->id,$ac_id);
+        }}
+        $garageInfo = Garage::getInfoById($user->id,$attribute->ac_id);
         if ($garageInfo){
             $garageInfo->increment('number',$val['number']);
             flash('添加成功')->success()->important();
@@ -89,7 +102,7 @@ class ParkingLotController extends BaseController
         }
         $data = [
             'user_id'=>$user->id,
-            'address_id'=>$ac_id,
+            'address_id'=>$attribute->ac_id,
             'number' =>$val['number']
         ];
         $re = Garage::addGarage($data);
@@ -117,6 +130,10 @@ class ParkingLotController extends BaseController
         $user = $this->users->where('phone','=',$val['phone'])->first();
         $ac_id = Auth::user()->attribute->ac_id;
         if ($user){
+            if(Auth::user()->attribute->stop_up == 1)
+            {
+                return json_encode($this->switchName($user->truename));
+            }
             if ($val['type'] == "1"){
                 $doorArr = explode(',',$user->have_doorID);
                 if (array_search($ac_id,$doorArr) === false){

@@ -7,7 +7,7 @@
         </div>
         <div class="ibox-content">
             <a class="menuid btn btn-primary btn-sm" href="javascript:history.go(-1)">返回</a>
-            <a href="{{route('admins.create')}}" link-url="javascript:void(0)"><button class="btn btn-primary btn-sm" type="button"><i class="fa fa-plus-circle"></i> 添加管理员</button></a>
+            {{--<a href="{{route('admins.create')}}" link-url="javascript:void(0)"><button class="btn btn-primary btn-sm" type="button"><i class="fa fa-plus-circle"></i> 添加管理员</button></a>--}}
             <form method="post" action="{{route('admins.index')}}" name="form">
                 <table class="table table-striped table-bordered table-hover m-t-md">
                     <thead>
@@ -26,7 +26,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($admins as $k => $item)
+                    @foreach($lists as $k => $item)
                         <tr>
                             <td class="text-center">{{$item->id}}</td>
                             <td class="text-center">{{$item->name}}</td>
@@ -59,22 +59,22 @@
                             </td>
                             <td class="text-center">
                                 <div class="btn-group">
-                                    <a href="{{route('admins.edit',$item->id)}}">
-                                        <button class="btn btn-primary btn-xs" type="button"><i class="fa fa-paste"></i> 修改</button>
+                                    <a href="{{route('merchant.edit',$item->id)}}">
+                                        <button class="btn btn-primary btn-xs" type="button"><i class="fa fa-paste"></i> 编辑属性</button>
                                     </a>
-                                    @if($item->status == 2)
-                                            <a href="{{route('admins.status',['status'=>1,'id'=>$item->id])}}"><button class="btn btn-info btn-xs" type="button"><i class="fa fa-warning"></i> 恢复</button></a>
-                                    @else
-                                            <a href="{{route('admins.status',['status'=>2,'id'=>$item->id])}}"><button class="btn btn-warning btn-xs" type="button"><i class="fa fa-warning"></i> 禁用</button></a>
-                                    @endif
-                                    <a href="{{route('admins.delete',$item->id)}}"><button class="btn btn-danger btn-xs" type="button"><i class="fa fa-trash-o"></i> 删除</button></a>
+                                    {{--@if($item->status == 2)--}}
+                                            {{--<a href="{{route('admins.status',['status'=>1,'id'=>$item->id])}}"><button class="btn btn-info btn-xs" type="button"><i class="fa fa-warning"></i> 恢复</button></a>--}}
+                                    {{--@else--}}
+                                            {{--<a href="{{route('admins.status',['status'=>2,'id'=>$item->id])}}"><button class="btn btn-warning btn-xs" type="button"><i class="fa fa-warning"></i> 禁用</button></a>--}}
+                                    {{--@endif--}}
+                                    {{--<a href="{{route('admins.delete',$item->id)}}"><button class="btn btn-danger btn-xs" type="button"><i class="fa fa-trash-o"></i> 删除</button></a>--}}
                                 </div>
                             </td>
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
-                {{$admins->links()}}
+                {{$lists->links()}}
             </form>
         </div>
     </div>

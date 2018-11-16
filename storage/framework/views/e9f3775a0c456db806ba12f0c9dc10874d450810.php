@@ -12,8 +12,9 @@
                     <thead>
                     <tr>
                         <th class="text-center" width="100">ID</th>
-                        <th>用户名</th>
-                        <th>用户权限</th>
+                        <th class="text-center">用户名</th>
+                        <th class="text-center">用户权限</th>
+                        <th class="text-center">身份</th>
                         <th class="text-center">最后登录IP</th>
                         <th class="text-center" width="150">最后登录时间</th>
                         <th class="text-center" width="150">注册时间</th>
@@ -27,12 +28,22 @@
                     <?php $__currentLoopData = $admins; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $k => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
                             <td class="text-center"><?php echo e($item->id); ?></td>
-                            <td><?php echo e($item->name); ?></td>
-                            <td>
+                            <td class="text-center"><?php echo e($item->name); ?></td>
+                            <td class="text-center">
                                 <?php $__currentLoopData = $item->roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <?php echo e($role->name); ?>
 
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </td>
+                            <td class="text-center">
+                                <?php switch($item->attribute->stop_up):
+                                    case (0): ?>
+                                    子管理
+                                    <?php break; ?>
+                                    <?php case (1): ?>
+                                    商户
+                                    <?php break; ?>
+                                <?php endswitch; ?>
                             </td>
                             <td class="text-center"><?php echo e($item->last_login_ip); ?></td>
                             <td class="text-center"><?php echo e($item->created_at->diffForHumans()); ?></td>

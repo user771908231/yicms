@@ -66,7 +66,7 @@ class AdminsService
 
         $admin = $this->adminsRepository->create($datas);
         //关联主账号的信息
-        $admin->attribute()->create(['pid'=>Auth::id(),'ac_id'=>Auth::user()->attribute->ac_id]);
+        $admin->attribute()->create(['pid'=>Auth::id(),'ac_id'=>Auth::user()->attribute->ac_id,'stop_up'=>$datas['stop_up']]);
         //插入模型关联数据
         $admin->roles()->attach($request->role_id);
 
@@ -108,6 +108,7 @@ class AdminsService
         }
 
         $admin->update($datas);
+        $admin->attribute()->update(['stop_up'=>$datas['stop_up']]);
 
         //更新关联表数据
         if(count($request->role_id)){
