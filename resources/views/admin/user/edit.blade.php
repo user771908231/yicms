@@ -3,13 +3,13 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="ibox-title">
-            <h5>添加管理员</h5>
+            <h5>添加用户</h5>
         </div>
         <div class="ibox-content">
             <a class="menuid btn btn-primary btn-sm" href="javascript:history.go(-1)">返回</a>
-            <a href="{{route('admins.index')}}"><button class="btn btn-primary btn-sm" type="button"><i class="fa fa-plus-circle"></i> 管理员管理</button></a>
+            <a href="{{route('user.index')}}"><button class="btn btn-primary btn-sm" type="button"><i class="fa fa-plus-circle"></i> 管理员管理</button></a>
             <div class="hr-line-dashed m-t-sm m-b-sm"></div>
-            <form class="form-horizontal m-t-md" action="{{ route('admins.update',$admin->id) }}" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
+            <form class="form-horizontal m-t-md" action="{{ route('user.update',$admin->id) }}" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
                 {!! csrf_field() !!}
                 {{method_field('PATCH')}}
                 <div class="form-group">

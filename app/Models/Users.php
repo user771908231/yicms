@@ -11,6 +11,12 @@ class Users extends Model
     protected $connection='thing-eye';
     public $timestamps = false;
 
+    protected $fillable = [
+        'truename','avatar','password','phone','gender','is_verify','od_passwd','have_doorID','homeID','companyID',
+        'reg_time','is_lock','client_id','lock_property','non_inductive','updated_at'
+    ];
+
+
     protected $hidden=[
         'password',
         'od_passwd'

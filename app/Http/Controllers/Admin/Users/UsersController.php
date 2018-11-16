@@ -11,12 +11,19 @@ namespace App\Http\Controllers\Admin\Users;
 
 use App\Console\PublicFunction;
 use App\Http\Controllers\Admin\BaseController;
+use App\Http\Requests\User\UserRequest;
 use App\Models\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class UsersController extends BaseController
 {
+    protected $user;
+
+    public function __construct(Users $users)
+    {
+        $this->user = $users;
+    }
 
     public function index()
     {
@@ -48,7 +55,7 @@ class UsersController extends BaseController
 
     public function create()
     {
-
+        return view('admin.user.create');
     }
 
     public function update()
@@ -66,9 +73,44 @@ class UsersController extends BaseController
 
     }
 
-    public function store()
+    public function store(UserRequest $userRequest)
     {
-
+//        dd($userRequest->all());
+        $val = $userRequest->only(['phone',
+            'building',
+            'unit',
+            'home',
+            'garage',
+            'state']);
+        $user = $this->user->where('phone',$val['phone'])->first();
+        if (!$user) {
+            flash('该用户尚未注册！')->error()->important();
+            return redirect()->route('user.create');
+        }
+        if ($val['state'] != 0 && $val['state'] != 1)
+        {
+            flash('状态错误！')->error()->important();
+            return redirect()->route('user.create');
+        }
+        $new_home = $this->addZero(Auth::user()->attribute->ac_id,10).$this
+                ->addZero($val['building'],3).$this
+                ->addZero($val['unit'],2).$this
+                ->addZero($val['home'],4);
+        $user_data = [
+            'homeID' => $user->homeID != $user->homeID.','.$new_home?$user->homeID.','.$new_home:$new_home
+        ];
+        if ($user->have_doorID != Auth::user()->attribute->ac_id ){
+            $user_data['have_doorID'] = $user->have_doorID.','.Auth::user()->attribute->ac_id;
+        }
+        if ($val['state'] == 0){
+            $user_data['lock_property'] = $user->lock_property?$user->lock_property.','.Auth::user()->attribute->ac_id:Auth::user()->attribute->ac_id;
+        }
+        if($user->fill($user_data)->update()){
+            flash('SUCCESS！')->success()->important();
+        }else{
+            flash('用户更新失败！')->error()->important();
+        }
+        return redirect()->route('user.index');
     }
 
     /**
@@ -89,9 +131,20 @@ class UsersController extends BaseController
         if ($user->update()){
             flash('删除成功！')->success()->important();
         }else{
-            flash('删除失败！')->success()->important();
+            flash('删除失败！')->error()->important();
         }
 
         return redirect()->route('user.index');
+    }
+
+    protected function addZero($number,$all) {
+        $len =strlen($number) ;
+        $a = $all- $len;
+        $add = "";
+        for ($i=0;$i<$a;$i++){
+            $add .="0";
+        }
+        $b = $add.''.$number;
+        return $b;
     }
 }

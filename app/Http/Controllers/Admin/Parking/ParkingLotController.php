@@ -117,7 +117,7 @@ class ParkingLotController extends BaseController
         $user = $this->users->where('phone','=',$val['phone'])->first();
         $ac_id = Auth::user()->attribute->ac_id;
         if ($user){
-            if ($val['type']){
+            if ($val['type'] == "1"){
                 $doorArr = explode(',',$user->have_doorID);
                 if (array_search($ac_id,$doorArr) === false){
                     return json_encode("NOT_FOUND_OWNER");
