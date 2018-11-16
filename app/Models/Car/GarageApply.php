@@ -9,10 +9,10 @@
 namespace App\Models\Car;
 
 use App\Models\Users;
-use Illuminate\Auth\Access\Gate;
-use Illuminate\Database\Eloquent\Model;
 
-use Illuminate\Support\Facades\DB;
+use Illuminate\{
+    Auth\Access\Gate, Database\Eloquent\Model, Support\Facades\DB
+};
 use PDOException;
 class GarageApply extends Model
 {
@@ -36,9 +36,8 @@ class GarageApply extends Model
         return $info;
     }
 
-    public static function getGarageByAc($ac_id){
-        $info = GarageApply::where('address','=',$ac_id)->orderBy('id', 'DESC')->paginate(15);
-
+    public static function getGarageByAc($ac_id,$arr = ''){
+        $info = GarageApply::where('address','=',$ac_id)->with($arr)->orderBy('id', 'DESC')->paginate(15);
         return $info;
     }
 
@@ -63,21 +62,22 @@ class GarageApply extends Model
         try {
             $re = Garage::getInfoById($user_id,$address);
             DB::beginTransaction();
-            DB::table('garage_apply')->where('id','=',$id)->update(['state' => 1]);
+            DB::connection("thing-eye")->table('garage_apply')->where('id','=',$id)->update(['state' => 1]);
             if ($re){  //之前是否有车库  有则更新以前车库  以前车位数加一
                 $num = $re->number;
                 $array['number'] = $num + 1;
-                DB::table('garage')->where('user_id','=',$user_id)->where('address_id','=',$address)->update($array);
+                DB::connection("thing-eye")->table('garage')->where('user_id','=',$user_id)->where('address_id','=',$address)->update($array);
             }else{  //没有 则添加车库
                 $array['user_id'] = $user_id;
                 $array['number'] = 1;
                 $array['address_id'] = $address;
-                DB::table('garage')->insert($array);
+                DB::connection("thing-eye")->table('garage')->insert($array);
             }
             DB::commit();
             return true;
         } catch (PDOException $ex) {
-            DB::roll();
+            dd($ex->getMessage());
+            DB::rollBack();
             return false;
         }
     }
