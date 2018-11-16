@@ -125,7 +125,7 @@ class AdminsController extends BaseController
             return redirect()->route('admins.index');
         }
 
-
+        $admin->attribute()->delete();
         $admin->roles()->detach();
 
         $admin->delete();

@@ -44,7 +44,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">车位数：</label>
                         <div class="input-group col-sm-2">
-                            <input type="password" class="form-control" name="number" placeholder="车位数" title="车位数">
+                            <input type="number" class="form-control" name="number" placeholder="车位数" title="车位数" value="1">
                             @if ($errors->has('password'))
                                 <span class="help-block m-b-none"><i class="fa fa-info-circle"></i>{{$errors->first('password')}}</span>
                             @endif

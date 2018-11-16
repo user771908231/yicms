@@ -31,7 +31,7 @@ Route::group(['namespace' => 'Admin','prefix' => 'admin'], function (){
 
         Route::get('admins/delete/{admin}','AdminsController@delete')->name('admins.delete');
 
-        Route::resource('admins','AdminsController',['only' => ['index', 'create', 'store', 'update', 'edit']]); //管理员
+        Route::resource('admins','AdminsController'); //管理员
 
         Route::get('roles/access/{role}','RolesController@access')->name('roles.access');
 
