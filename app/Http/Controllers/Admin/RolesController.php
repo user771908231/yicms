@@ -99,9 +99,13 @@ class RolesController extends BaseController
     {
 
         $rules = $rulesRepository->getRules();
+        if (Auth::id() != 1)
+        {
+            $rules = Auth::user()->thisRoleMenu();
+        }
 //        dd(Auth::user()->thisRoleMenu(),$rules);
 
-        $datas = $tree::channelLevel(Auth::user()->thisRoleMenu(), 0, '&nbsp;', 'id','parent_id');
+        $datas = $tree::channelLevel( $rules, 0, '&nbsp;', 'id','parent_id');
 
         $rules = $role->rules->pluck('id')->toArray();
 
