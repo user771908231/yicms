@@ -16,6 +16,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class AdminAttribute extends Model
 {
+
+    protected $connection = 'mysql';
     protected $table='admin_attribute';
 
     protected $primaryKey="id";

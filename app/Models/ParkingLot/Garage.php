@@ -8,6 +8,7 @@
 
 namespace App\Models\ParkingLot;
 
+use App\Models\AdminAttribute;
 use Illuminate\Auth\Access\Gate;
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,6 +20,7 @@ class Garage extends Model
     protected $table = "garage";
     protected $connection = 'thing-eye';
     protected $guarded = [];
+    protected $with = ['admins'];
 
     public $timestamps = false;
 
@@ -123,5 +125,19 @@ class Garage extends Model
 
     public static function getInfoByPlate($plate,$admin_ac_id){
         return Garage::where('license_plate','like','%'.$plate.'%')->where('address_id','=',$admin_ac_id)->first();
+    }
+
+    /**
+     * @Title : admin
+     * @User  : company_windows_locahost_wm
+     * @Date  : 2018/11/17
+     * @Time  : 12:03
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function admins()
+    {
+//        dd(AdminAttribute::class);
+//        dd(DB::connection('mysql')->table('admin_attribute'));
+        return $this->hasOne(AdminAttribute::class,'admin_id','admin');
     }
 }
