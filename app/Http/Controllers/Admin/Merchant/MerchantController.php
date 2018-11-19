@@ -44,7 +44,26 @@ class MerchantController extends BaseController
         $merchant = $this->merchant->find($id);
         $var['park_time'] = $var['park_time']? $var['park_time'].' 00:00:00':$var['park_time'];
         $merchant->fill(['name'=>$var['name']]);
+        $var['is_park_number'] = 0;
+        if ($merchant->attribute->is_park_number == 0 && $merchant->attribute->park_number == 0) {
+            $var['is_park_number'] =  $var['park_number'];
+        }else if ($merchant->attribute->is_park_number == 0 && $merchant->attribute->park_number != 0){
+            if ($var['park_number'] > $merchant->attribute->park_number){
+                $var['is_park_number'] = $var['park_number'] - $merchant->attribute->park_number;
+            }else{
+                $var['is_park_number'] = 0;
+            }
+
+        }else if ($merchant->attribute->is_park_number != 0 && $merchant->attribute->park_number != 0){
+            if ($var['park_number'] > $merchant->attribute->park_number){
+                $var['is_park_number'] = $merchant->attribute->is_park_number + ($var['park_number'] - $merchant->attribute->park_number);
+            }else{
+                $var['is_park_number'] = $merchant->attribute->is_park_number - ( $merchant->attribute->park_number - $var['park_number']);
+            }
+
+        }
         $merchant->attribute->fill(PublicFunction::arrayRemove($var,'name'));
+//        dd(PublicFunction::arrayRemove($var,'name'),$merchant->attribute);
         if ($merchant->update() && $merchant->attribute->update()){
             flash('更新成功')->success()->important();
         }else{
