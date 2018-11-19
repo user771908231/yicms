@@ -36,6 +36,7 @@
                                 @endforeach
                             </td>
                             <td class="text-center">
+                                {{dd($item->attribute)}}
                                 @switch($item->attribute->stop_up)
                                     @case(0)
                                     子管理
