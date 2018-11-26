@@ -67,7 +67,7 @@
                     <div class="input-group col-sm-1">
                         <select class="form-control" name="ac_id">
                             @foreach($access as $k=>$item)
-                                <option value="{{$item->ac_id}}" @if($admin->attribute->ac_id == $item->ac_id) selected="selected" @endif>{{$item->ac_name}}</option>
+                                <option value="{{$item->ac_id}}" @if($admin->attribute->ac_id == $item->ac_id) selected="selected" @endif>{{$item->ac_id.'--'.$item->ac_name}}</option>
                             @endforeach
                         </select>
                         @if ($errors->has('ac_id'))
