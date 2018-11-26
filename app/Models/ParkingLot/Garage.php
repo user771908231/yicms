@@ -82,9 +82,20 @@ class Garage extends Model
      */
     public static function getGarageByAc($ac,$num=15){
         if ($num==0){
-            return Garage::where('address_id','=',$ac)->join('users','garage.user_id','=','users.id')->select('garage.*','users.truename','users.phone')->get();
+            if (Auth::getUser()->pid == 1){
+                return Garage::where('address_id','=',$ac)->join('users','garage.user_id','=','users.id')->select('garage.*','users.truename','users.phone')->get();
+            }else{
+                return Garage::where()->join('users','garage.user_id','=','users.id')->select('garage.*','users.truename','users.phone')->get();
+            }
+
         }else{
-            return Garage::where('address_id','=',$ac)->join('users','garage.user_id','=','users.id')->select('garage.*','users.truename','users.phone')->paginate(15);
+            if (Auth::getUser()->pid == 1){
+                return Garage::where('address_id','=',$ac)->join('users','garage.user_id','=','users.id')->select('garage.*','users.truename','users.phone')->paginate(15);
+
+            }else{
+                return Garage::where(['address_id'=>$ac,'admin'=>Auth::id()])->join('users','garage.user_id','=','users.id')->select('garage.*','users.truename','users.phone')->paginate(15);
+            }
+
         }
     }
 
@@ -105,25 +116,25 @@ class Garage extends Model
 
 //        DB::connection()->enableQueryLog(); // 开启查询日志
 //        DB::table('users'); // 要查看的sql
-        $re = Garage::where('address_id','=',$ac)
-            ->join('users','garage.user_id','=','users.id')
-            ->select('garage.*','users.truename','users.phone');
+//        $re = Garage::where('address_id','=',$ac)
+//            ->join('users','garage.user_id','=','users.id')
+//            ->select('garage.*','users.truename','users.phone');
         if (\Auth::getUser()->isMain()){
-            $row = $re
-                ->where('truename','like','%'.$keywords.'%')
-                ->orwhere('license_plate','like','%'.$keywords.'%')
-                ->orwhere('phone','like','%'.$keywords.'%')
-                ->where('address_id','=',$ac)->orderBy('id', 'DESC')
-                ->paginate(15);
+            $re = Garage::where(['address_id'=>$ac])
+                ->join('users','garage.user_id','=','users.id')
+                ->select('garage.*','users.truename','users.phone');
         }else{
-            $row = $re
-                ->where('truename','like','%'.$keywords.'%')
-                ->orwhere('license_plate','like','%'.$keywords.'%')
-                ->orwhere('phone','like','%'.$keywords.'%')
-                ->where(['address_id'=>$ac,'admin'=>Auth::id()])->orderBy('id', 'DESC')
-                ->paginate(15);
+            $re = Garage::where(['address_id'=>$ac,'admin'=>Auth::id()])
+                ->join('users','garage.user_id','=','users.id')
+                ->select('garage.*','users.truename','users.phone');
         }
-
+//        dd($re);
+        $row = $re
+            ->where('truename','like','%'.$keywords.'%')
+            ->orwhere('license_plate','like','%'.$keywords.'%')
+            ->orwhere('phone','like','%'.$keywords.'%')
+            ->where('address_id','=',$ac)->orderBy('id', 'DESC')
+            ->paginate(15);
 
 //        dd($row);
 //        $queries = DB::getQueryLog(); // 获取查询日
