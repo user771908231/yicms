@@ -12,6 +12,7 @@
             <form class="form-horizontal m-t-md" action="{{route('roles.update',$role->id)}}" method="post">
                 {!! csrf_field() !!}
                 {{method_field('PATCH')}}
+                <input type="hidden"  name="u_id" value="{{\Illuminate\Support\Facades\Auth::id()}}">
                 <div class="form-group">
                     <label class="col-sm-2 control-label">角色名称：</label>
                     <div class="input-group col-sm-2">
