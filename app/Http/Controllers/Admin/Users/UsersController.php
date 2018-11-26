@@ -126,8 +126,15 @@ class UsersController extends BaseController
     {
         $acc = Auth::user();
         $user = $users->getById($id);
-        $user->have_doorID=PublicFunction::explodeString($user->have_doorID,$acc->attribute->ac_id);
-        $user->companyID=null;
+         switch($acc->attribute->with('accessControl')->first()->accessControl->type){
+             case 0:
+                 $user->companyID= null;
+                 break;
+         }
+
+         $user->have_doorID=PublicFunction::explodeString($user->have_doorID,$acc->attribute->ac_id);
+//         $user->homeID=PublicFunction::explodeString($user->homeID,$acc->attribute->ac_id);
+
         if ($user->update()){
             flash('删除成功！')->success()->important();
         }else{
