@@ -105,11 +105,7 @@ class Admin extends Authenticatable
 
     public function isMain()
     {
-        if ($this->attribute->admin_id == $this->attribute->pid){
-            return true;
-        }else{
-            return false;
-        }
+        return $this->attribute->admin_id != 1? false : true;
     }
 
 }
