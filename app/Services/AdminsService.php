@@ -67,7 +67,7 @@ class AdminsService
 
         $admin = $this->adminsRepository->create($datas);
         //关联主账号的信息
-        if( $datas['ac_id'])
+        if( array_key_exists('ac_id',$datas))
         {
             $admin->attribute()->create(['pid'=>Auth::id(),'ac_id'=>$datas['ac_id'],'stop_up'=>$datas['stop_up']]);
         }else{
@@ -115,7 +115,12 @@ class AdminsService
         }
 
         $admin->update($datas);
-        $admin->attribute()->update(['stop_up'=>$datas['stop_up']]);
+        if(array_key_exists('ac_id',$datas)){
+            $admin->attribute()->update(['stop_up'=>$datas['stop_up'],'ac_id'=>$datas['ac_id']]);
+        }else{
+            $admin->attribute()->update(['stop_up'=>$datas['stop_up']]);
+        }
+
 
         //更新关联表数据
         if(count($request->role_id)){

@@ -81,14 +81,14 @@ class AdminsController extends BaseController
         $admin = $this->adminsService->ById($id);
         $val = $request->only('this');
 //        $roles = $this->rolesRepository->getRoles();
-
+        $access =$this->access->getAccesssNameLists();
         $roles = $this->rolesRepository->thisAdminRoles();
         if (count($val)){
             $admin->This = $val['this'];
             return view('admin.admins.edit', compact('admin','roles'));
         }
 
-        return view('admin.admins.edit', compact('admin','roles'));
+        return view('admin.admins.edit', compact('admin','roles','access'));
     }
 
     /**
