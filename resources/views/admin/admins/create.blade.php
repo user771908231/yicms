@@ -52,6 +52,7 @@
                             @endif
                         </div>
                     </div>
+                    @if(\Illuminate\Support\Facades\Auth::id() == 1)
                     <div class="hr-line-dashed m-t-sm m-b-sm"></div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">公司/小区：</label>
@@ -59,7 +60,7 @@
                             <select class="form-control" name="ac_id">
                                 <option value="0" @if(old('ac_id') == 1) selected="selected" @endif>未选择</option>
                                 @foreach($access as $k=>$item)
-                                <option value="{{$item->ac_id}}" >{{$item->ac_name}}</option>
+                                <option value="{{$item->ac_id}}" >{{$item->ac_id.'--'.$item->ac_name}}</option>
                                 @endforeach
                             </select>
                             @if ($errors->has('ac_id'))
@@ -67,6 +68,7 @@
                             @endif
                         </div>
                     </div>
+                    @endif
                     <div class="hr-line-dashed m-t-sm m-b-sm"></div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">状态：</label>

@@ -60,6 +60,22 @@
                         @endif
                     </div>
                 </div>
+                @if(\Illuminate\Support\Facades\Auth::id() == 1)
+                <div class="hr-line-dashed m-t-sm m-b-sm"></div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">公司/小区：</label>
+                    <div class="input-group col-sm-1">
+                        <select class="form-control" name="ac_id">
+                            @foreach($access as $k=>$item)
+                                <option value="{{$item->ac_id}}" @if($admin->attribute->ac_id == $item->ac_id) selected="selected" @endif>{{$item->ac_name}}</option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has('ac_id'))
+                            <span class="help-block m-b-none"><i class="fa fa-info-circle"></i>{{$errors->first('ac_id')}}</span>
+                        @endif
+                    </div>
+                </div>
+                @endif
                 <div class="hr-line-dashed m-t-sm m-b-sm"></div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">状态：</label>
