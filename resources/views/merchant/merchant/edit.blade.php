@@ -35,7 +35,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">车位时间：</label>
                     <div class="input-group col-sm-2">
-                        <input type="date" class="form-control" name="park_time" value="{{$admin->attribute->park_time}}">
+                        <input type="date" class="form-control" name="park_time" value="{{substr($admin->attribute->park_time,0,10)}}">
                         @if ($errors->has('park_time'))
                             <span class="help-block m-b-none"><i class="fa fa-info-circle"></i>{{$errors->first('park_time')}}</span>
                         @endif
