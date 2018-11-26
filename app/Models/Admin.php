@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Recharge\Consumption;
 use App\Models\Traits\RbacCheck;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -58,6 +59,57 @@ class Admin extends Authenticatable
         return tap($this->attribute()->newModelInstance($attributes),function($instance){
             dd($instance);
         });
+    }
+
+    public function consumption()
+    {
+        return $this->hasMany(Consumption::class,'merchant_id','id');
+    }
+
+
+    /**
+     * @Title : thisAmountReduced
+     * @User  : company_windows_locahost_wm
+     * @Date  : 2018/11/26
+     * @Time  : 9:17
+     * @param array $data ['amount'=>float,log=>[],'type'=>1]
+     * @return bool
+     */
+    public function thisAmountReduced(array $data)
+    {
+//        dd($this->with('consumption'),$data);
+        if ($this->amount_money > floatval($data['face_value'])){
+            try{
+                $this->amount_money = bcsub($this->amount_money, floatval($data['face_value']), 2);
+                $this->update();
+                $consumption = new Consumption();
+                $consumption->fill([
+                    'merchant_id'=>$this->id,
+                    'type'=>0,
+                    'amount_money'=>floatval($data['face_value']),
+                    'data' => json_encode([
+                        'time'=>time(),
+                        'amount_money' => $this->amount_money
+                    ])
+                ]);
+                $consumption->save();
+                return true;
+            }catch (\Exception $exception){
+                return false;
+            }
+        }else{
+            return false;
+        }
+
+    }
+
+    public function isMain()
+    {
+        if ($this->attribute->admin_id == $this->attribute->pid){
+            return true;
+        }else{
+            return false;
+        }
     }
 
 }

@@ -12,6 +12,7 @@ use App\Models\AdminAttribute;
 use Illuminate\Auth\Access\Gate;
 use Illuminate\Database\Eloquent\Model;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use TomLingham\Searchy\Facades\Searchy;
 
@@ -107,12 +108,22 @@ class Garage extends Model
         $re = Garage::where('address_id','=',$ac)
             ->join('users','garage.user_id','=','users.id')
             ->select('garage.*','users.truename','users.phone');
-        $row = $re
-            ->where('truename','like','%'.$keywords.'%')
-            ->orwhere('license_plate','like','%'.$keywords.'%')
-            ->orwhere('phone','like','%'.$keywords.'%')
-            ->where('address_id','=',$ac)->orderBy('id', 'DESC')
-            ->paginate(15);
+        if (\Auth::getUser()->isMain()){
+            $row = $re
+                ->where('truename','like','%'.$keywords.'%')
+                ->orwhere('license_plate','like','%'.$keywords.'%')
+                ->orwhere('phone','like','%'.$keywords.'%')
+                ->where('address_id','=',$ac)->orderBy('id', 'DESC')
+                ->paginate(15);
+        }else{
+            $row = $re
+                ->where('truename','like','%'.$keywords.'%')
+                ->orwhere('license_plate','like','%'.$keywords.'%')
+                ->orwhere('phone','like','%'.$keywords.'%')
+                ->where(['address_id'=>$ac,'admin'=>Auth::id()])->orderBy('id', 'DESC')
+                ->paginate(15);
+        }
+
 
 //        dd($row);
 //        $queries = DB::getQueryLog(); // 获取查询日
