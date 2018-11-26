@@ -10,6 +10,7 @@ namespace App\Models;
 
 
 use App\Models\Access\AccessControl;
+use App\Models\Dot\Dot;
 use App\Models\Open\OpenRecordOld;
 use App\Models\Open\OpenRecord;
 use Illuminate\Database\Eloquent\Model;
@@ -24,7 +25,7 @@ class AdminAttribute extends Model
 
     protected $fillable=['admin_id','pid','ac_id','stop_up','park_number','park_type','park_time','is_park_number'];
 
-//    protected $with=['user','accessControl'];
+    protected $with=['accessControl'];
 
     public function user()
     {
@@ -46,5 +47,10 @@ class AdminAttribute extends Model
     public function accessControl()
     {
         return $this->hasOne(AccessControl::class,'ac_id','ac_id');
+    }
+
+    public function dot()
+    {
+        return $this->hasMany(Dot::class,'ac_id','ac_id')->select('ac_id','id','name');
     }
 }

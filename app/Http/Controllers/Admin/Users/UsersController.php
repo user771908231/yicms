@@ -126,12 +126,12 @@ class UsersController extends BaseController
     {
         $acc = Auth::user();
         $user = $users->getById($id);
-         switch($acc->attribute->with('accessControl')->first()->accessControl->type){
+
+         switch($acc->attribute->accessControl->ac_type){
              case 0:
                  $user->companyID= null;
                  break;
          }
-
          $user->have_doorID=PublicFunction::explodeString($user->have_doorID,$acc->attribute->ac_id);
 //         $user->homeID=PublicFunction::explodeString($user->homeID,$acc->attribute->ac_id);
 
