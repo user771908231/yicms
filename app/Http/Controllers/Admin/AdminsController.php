@@ -54,7 +54,7 @@ class AdminsController extends BaseController
      */
     public function store(AdminRequest $request)
     {
-        if(Auth::user()->is_top){
+        if(Auth::user()->is_top or (Auth::id() == 1)){
             $this->adminsService->create($request);
 
             flash('添加管理员成功')->success()->important();
