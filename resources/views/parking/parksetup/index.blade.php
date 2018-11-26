@@ -36,24 +36,24 @@
                 {!! csrf_field() !!}
                 {{method_field('PATCH')}}
             <div  class="stopcarrule">
-
+{{--                {{dd($lists)}}--}}
                 <h5 style="font-size:18px;color:#3598db;">停车场基础设置</h5>
                 <hr>
                 对外开放功能<select name="is_open" id="is_open">
                     <option value="1" @if($lists->accessControl->is_open == 1) selected @endif>开启</option>
                     <option value="0" @if($lists->accessControl->is_open == 0) selected @endif>关闭</option>
                 </select>
-                <div>超时时限：<input type='text' name="over_time" id='over_time' value='{{$lists->accessControl->rules->overtime}}' placeholder='建议输入15 必须为数字'>  分设置时间来规定缴费后挪车时间</div>
-                <div>免费分钟数：<input type='text' name="free" id='free' value='{{$lists->accessControl->rules->free}}' placeholder='超出（）分钟，免费停放'> 分设置时间来规定免费停放时间</div>
+                <div>超时时限：<input type='text' name="over_time" id='over_time' value='@if ($lists->accessControl->rules) {{$lists->accessControl->rules->overtime}}@endif' placeholder='建议输入15 必须为数字'>  分设置时间来规定缴费后挪车时间</div>
+                <div>免费分钟数：<input type='text' name="free" id='free' value='@if ($lists->accessControl->rules){{$lists->accessControl->rules->free}}@endif' placeholder='超出（）分钟，免费停放'> 分设置时间来规定免费停放时间</div>
                 <div>车位总数：<input id="allNumber" name='all_number' type='text' value='{{$lists->accessControl->garage_number_all}}' placeholder='请输入车位总数 长度限制6位'>位</div>
                 <hr/>
                 <div id="setInfo">
                     <h4 style="font-size:18px;color:#3598db;">计费方式（任选其一）</h4>
                     <b>方式一：（按天）</b>
-                    <div>单价设置：<input id='unit_price_day' name="unit_price_day" type='text' value='@if($lists->accessControl->rules->type == 1) {{$lists->accessControl->unit_price}}@endif' placeholder='金额'>元/天</div>
+                    <div>单价设置：<input id='unit_price_day' name="unit_price_day" type='text' value='@if ($lists->accessControl->rules)@if($lists->accessControl->rules->type == 1) {{$lists->accessControl->unit_price}}@endif @endif' placeholder='金额'>元/天</div>
                     <br>
                     <b>方式二：（按小时）</b>
-                    <div>单价设置：<input id='unit_price_hour' name='unit_price_hour' type='text' value='@if($lists->accessControl->rules->type == 2) {{  $lists->accessControl->unit_price}}@endif' placeholder='金额'>元/小时</div>
+                    <div>单价设置：<input id='unit_price_hour' name='unit_price_hour' type='text' value='@if ($lists->accessControl->rules)@if($lists->accessControl->rules->type == 2) {{  $lists->accessControl->unit_price}}@endif @endif' placeholder='金额'>元/小时</div>
                     <br>
 
                     {{--<b>方式三：（自定义）</b>--}}
