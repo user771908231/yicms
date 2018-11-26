@@ -63,7 +63,7 @@ class ParkingLotController extends BaseController
         $Info = Garage::getInfoById($id,$val['ac_id']);
 //        dd($Info);
         //判断主商户 子商户
-        if ($Info->admins->pid == 1){
+        if ($Info->pid == 1){
             if ($val['type']){
                 $Info->increment('number');
             }else{
