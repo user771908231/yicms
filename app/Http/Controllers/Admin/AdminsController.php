@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Admin\AdminRequest;
+use App\Models\Access\AccessControl;
 use App\Models\Traits\RbacCheck;
 use Illuminate\Http\Request;
 use App\Services\AdminsService;
@@ -16,16 +17,20 @@ class AdminsController extends BaseController
 
     protected $rolesRepository;
 
+    protected $access;
+
     /**
      * AdminsController constructor.
      * @param AdminsService $adminsService
      * @param RolesRepository $rolesRepository
      */
-    public function __construct(AdminsService $adminsService,RolesRepository $rolesRepository)
+    public function __construct(AdminsService $adminsService,RolesRepository $rolesRepository,AccessControl $accessControl)
     {
         $this->adminsService = $adminsService;
 
         $this->rolesRepository = $rolesRepository;
+
+        $this->access = $accessControl;
     }
 
     /**
@@ -45,7 +50,8 @@ class AdminsController extends BaseController
     {
         $roles = $this->rolesRepository->thisAdminRoles();
 
-        return view('admin.admins.create', compact('roles'));
+        $access =$this->access->getAccesssNameLists();
+        return view('admin.admins.create', compact('roles','access'));
     }
 
     /**

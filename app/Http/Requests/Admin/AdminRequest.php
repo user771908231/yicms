@@ -33,6 +33,7 @@ class AdminRequest extends FormRequest
                     'avatr' => 'image|mimes:jpeg,bmp,png,gif',
                     'role_id' => 'required:integer',
                     'status' => 'required:integer',
+                    'ac_id' => 'required:integer',
                 ];
 
         }else{
@@ -68,6 +69,7 @@ class AdminRequest extends FormRequest
             'role_id.integer'   => '表单不合法',
             'status.required'   => '状态不能为空',
             'status.integer'    => '表单不合法',
+            'ac_id.required'    => '公司小区不能为空',
         ];
     }
 }

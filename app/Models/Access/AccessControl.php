@@ -44,6 +44,11 @@ class AccessControl extends Model
         return $this->hasOne(ParkingBillingRules::class,'ac_id','ac_id');
     }
 
+    public function getAccesssNameLists()
+    {
+        return $this->select('ac_id','ac_name')->get();
+    }
+
 
 
 

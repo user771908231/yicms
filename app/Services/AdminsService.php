@@ -51,6 +51,7 @@ class AdminsService
     {
         $auth = Auth::user();
         $datas = $request->all();
+//        dd($datas);
 
         //上传头像
         if ($request->avatr) {
@@ -66,7 +67,13 @@ class AdminsService
 
         $admin = $this->adminsRepository->create($datas);
         //关联主账号的信息
-        $admin->attribute()->create(['pid'=>Auth::id(),'ac_id'=>Auth::user()->attribute->ac_id,'stop_up'=>$datas['stop_up']]);
+        if( $datas['ac_id'])
+        {
+            $admin->attribute()->create(['pid'=>Auth::id(),'ac_id'=>$datas['ac_id'],'stop_up'=>$datas['stop_up']]);
+        }else{
+            $admin->attribute()->create(['pid'=>Auth::id(),'ac_id'=>Auth::user()->attribute->ac_id,'stop_up'=>$datas['stop_up']]);
+        }
+
         //插入模型关联数据
         $admin->roles()->attach($request->role_id);
 
