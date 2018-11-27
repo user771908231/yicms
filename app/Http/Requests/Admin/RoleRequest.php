@@ -42,6 +42,8 @@ class RoleRequest extends FormRequest
             'order.integer'   => '表单不合法',
             'status.required' => '状态不能为空',
             'status.integer'  => '表单不合法',
+            'u_id.required' => '状态不能为空',
+            'u_id.integer'  => '表单不合法',
         ];
     }
 }

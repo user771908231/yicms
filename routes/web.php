@@ -58,6 +58,14 @@ Route::group(['namespace' => 'Admin','prefix' => 'admin'], function (){
              */
             function (){
                 Route::resource('lists','ListsController');
+                /**
+                 * 充值记录
+                 */
+                Route::resource('recharge','RechargeController');
+                /**
+                 * 消费记录
+                 */
+                Route::resource('consumption','ConsumptionController');
             }
         );
             /**
@@ -188,6 +196,19 @@ Route::group(['namespace' => 'Admin','prefix' => 'admin'], function (){
                 function (){
 
                     Route::resource('/merchant','MerchantController');
+                }
+            );
+            Route::group(
+                ['namespace' => 'Coupon','prefix' => 'coupon'],
+                /**
+                 * @Title :
+                 * @User  : company_windows_locahost_wm
+                 * @Date  : 2018/11/6
+                 * @Time  : 15:16
+                 */
+                function (){
+
+                    Route::resource('/generate-coupon','GenerateCouponController');
                 }
             );
     });
