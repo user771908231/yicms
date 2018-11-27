@@ -62,7 +62,7 @@ class GenerateCouponController extends BaseController
     public function store(CouponRequest $couponRequest)
     {
         if($this->coupon->insertToArray($couponRequest->only(['name','face_value','available_dot','start_time','expire_time','type','number']))){
-            flash('生成卡券成功')->success()->important();
+            flash("生成卡券成功,一共生成了 {$this->coupon->saveNumber()} 张卡券")->success()->important();
         }else{
             flash('生成卡券失败')->error()->important();
         }

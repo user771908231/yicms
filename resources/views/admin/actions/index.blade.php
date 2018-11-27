@@ -22,7 +22,6 @@
 
                     @foreach($actions as $key => $item)
                         @if($item->type == 1)
-{{--{{--                            {{dd($item)}}--}}
 <tr>
                             <td class="text-center">{{$item->id}}</td>
                             <td class="text-center">@if($item->admin){{$item->admin->name}}@endif</td>

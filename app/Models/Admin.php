@@ -77,7 +77,6 @@ class Admin extends Authenticatable
      */
     public function thisAmountReduced(array $data)
     {
-//        dd($this->with('consumption'),$data);
         if ($this->amount_money > floatval($data['face_value'])){
             try{
                 $this->amount_money = bcsub($this->amount_money, floatval($data['face_value']), 2);
@@ -107,5 +106,7 @@ class Admin extends Authenticatable
     {
         return $this->attribute->admin_id != 1? false : true;
     }
+
+
 
 }

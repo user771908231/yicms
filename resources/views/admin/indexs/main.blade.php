@@ -14,7 +14,7 @@
           <i class="icon-users"></i>
         </div>
         <div class="value">
-          <a href="#"><h1 id="count1">
+          <a href="{{route('user.index')}}"><h1 id="count1">
               @if($admin)
                 @if($admin->attribute)
                 {{count($admin->attribute->user)}}
@@ -55,17 +55,17 @@
         </div>
       </section>
     </div>
-    {{--<div class="col-lg-3 col-sm-6">--}}
-      {{--<section class="panel">--}}
-        {{--<div class="symbol articlegreen">--}}
-          {{--<i class="icon-check-circle"></i>--}}
-        {{--</div>--}}
-        {{--<div class="value">--}}
-          {{--<a href="#"><h1 id="count3">1876</h1></a>--}}
-          {{--<p>笑话总数</p>--}}
-        {{--</div>--}}
-      {{--</section>--}}
-    {{--</div>--}}
+    <div class="col-lg-3 col-sm-6">
+      <section class="panel">
+        <div class="symbol articlegreen">
+          <i class="fa fa-cny"></i>
+        </div>
+        <div class="value">
+          <a href="{{route('consumption.index')}}"><h1 id="count3">{{$admin->amount_money}}</h1></a>
+          <p>账户余额</p>
+        </div>
+      </section>
+    </div>
     {{--<div class="col-lg-3 col-sm-6">--}}
       {{--<section class="panel">--}}
         {{--<div class="symbol rsswet">--}}
