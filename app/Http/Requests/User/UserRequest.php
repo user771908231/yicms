@@ -25,14 +25,26 @@ class UserRequest extends FormRequest
 
     public function rules()
     {
-        return [
-            'phone'=>'required|numeric|min:11,max:11',
-            'building'=>'required|numeric',
-            'unit'=>'required|numeric',
-            'home'=>'required|numeric',
-            'garage'=>'numeric',
-            'state'=>'required|numeric',
-        ];
+
+        switch (UserRequest::get('type'))
+        {
+            case "0":
+                return [
+                    'phone'=>'required|numeric|min:11,max:11',
+                ];
+                break;
+            case "1":
+                return [
+                    'phone'=>'required|numeric|min:11,max:11',
+                    'building'=>'required|numeric',
+                    'unit'=>'required|numeric',
+                    'home'=>'required|numeric',
+                    'garage'=>'numeric',
+                    'state'=>'required|numeric',
+                ];
+                break;
+        }
+
     }
 
     public function messages()

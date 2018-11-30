@@ -36,22 +36,32 @@ class CarListController extends BaseController
         if($_GET){
             if (isset($_GET['keywords']))$keywords = $_GET['keywords'];
         }
-        switch (2){
+        switch ($ac_info->accessControl->ac_type){
             case 0:
-//                $lists = GarageApply::index();
-                $lists = $this->users
-                    ->select('id', 'truename', 'avatar', 'client_id','homeID', 'phone', 'have_doorID', 'reg_time', 'is_lock', 'lock_property', 'gender', 'is_verify', 'verify_type', 'od_passwd')
-                    ->where('truename','like','%'.$keywords.'%')
-                    ->orWhere('phone','like','%'.$keywords.'%')
-                    ->with(['car'=>function ($q) use ($keywords){
-                        $q->Where('license_plate','like','%'.$keywords.'%');
-                    }])
+                if ( $keywords == ''){
+                    $lists = $this->users
+//                        ->select('id', 'truename', 'avatar', 'companyID','client_id','homeID', 'phone', 'have_doorID', 'reg_time', 'is_lock', 'lock_property', 'gender', 'is_verify', 'verify_type', 'od_passwd')
+                        ->where('companyID',$ac_info->ac_id)
+                        ->with('car')
+                        ->orderBy('id', 'DESC')
+                        ->paginate(20);
+                }else{
+                    $lists = $this->users
+                        ->select('id', 'truename', 'avatar', 'client_id','homeID', 'phone', 'have_doorID', 'reg_time', 'is_lock', 'lock_property', 'gender', 'is_verify', 'verify_type', 'od_passwd')
+                        ->where('companyID',$ac_info->ac_id)
+                        ->orWhere('truename','like','%'.$keywords.'%')
+                        ->orWhere('phone','like','%'.$keywords.'%')
+                        ->with(['car'=>function ($q) use ($keywords){
+                            $q->Where('license_plate','like','%'.$keywords.'%');
+                        }])
 //                    ->whereHas('car',function($query) use ($keywords){
 //                        $query->Where('license_plate','like','%'.$keywords.'%');
 //                    })
-                    ->with('car')
-                    ->orderBy('id', 'DESC')
-                    ->paginate(15);
+                        ->with('car')
+                        ->orderBy('id', 'DESC')
+                        ->paginate(15);
+                }
+
                 break;
             case 1:
                 $lists = Users::getCommunityUserByAcId($ac_info->ac_id,$keywords,20);

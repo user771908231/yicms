@@ -8,9 +8,8 @@
         <div class="ibox-content">
             <a class="menuid btn btn-primary btn-sm" href="javascript:history.go(-1)">返回</a>
 {{--            {{dd(\Illuminate\Support\Facades\Auth::user()->attribute)}}--}}
-            @if(\Illuminate\Support\Facades\Auth::getUser()->attribute->accessControl->ac_type == 1)
             <a href="{{route('user.create')}}" link-url="javascript:void(0)"><button class="btn btn-primary btn-sm" type="button"><i class="fa fa-plus-circle"></i> 添加</button></a>
-            @endif
+
             <form method="post" action="{{route('user.index')}}" name="form">
                 <table class="table table-striped table-bordered table-hover m-t-md">
                     <thead>

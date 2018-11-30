@@ -153,7 +153,8 @@ class ParkingLotController extends BaseController
         }else{
             flash('删除失败')->error()->important();
         }
-        return redirect()->route('parking.index');
+        return redirect()->back();
+//        return redirect()->route('parking.index');
     }
 
     /**

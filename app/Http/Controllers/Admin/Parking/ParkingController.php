@@ -11,12 +11,14 @@ namespace App\Http\Controllers\Admin\Parking;
 
 use App\Http\Controllers\Admin\BaseController;
 use App\Models\Open\OpenRecord;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ParkingController extends BaseController
 {
     public function index()
     {
+//        dd(redirect()->refresh());
 //        sleep(5);
 //        $lists = Auth::user()->attribute->openRecord()->orderBy('time', 'desc')->paginate(20);
         $lists = OpenRecord::getLists(Auth::user()->attribute->ac_id);
@@ -51,11 +53,13 @@ class ParkingController extends BaseController
 
     public function destroy(OpenRecord $openRecord,int $id)
     {
+//        redirect()->refresh()->getRequest()->headers->get('referer');
         if($openRecord->getById($id)->delete()){
             flash('删除成功')->success()->important();
         }else{
             flash('删除失败')->success()->important();
         }
-        return redirect()->route('parking.index');
+//        return redirect()->route('parking.index');
+        return redirect()->back();
     }
 }
