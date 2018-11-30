@@ -27,7 +27,7 @@ class ParkController extends BaseController
 
         $lists = $this->praking->where('ac_id',\Auth::user()->attribute->ac_id)
             ->with(['bill','user','access'])->orderBy('id', 'desc')->paginate(20);
-//        dd($lists);
+//        dd($lists,$this->praking->find(2941));
         return $this->view()->with('lists',$lists);
 }
 
@@ -38,9 +38,11 @@ class ParkController extends BaseController
 
     public function update(Request $request,int $id)
     {
-        $park = $this->praking->find($id)->with(['bill','access'])->first();
+        $park = $this->praking->with(['bill','access'])->find($id);
+//        dd($park);
         if (!empty($park)){
             if ((int)$request->only(['type']) == 1){
+
                 if ($park->go_out !=  0){
                     flash('NO_PARKING_CAR')->error()->important();
                     return redirect()->route('park.index');
@@ -65,7 +67,7 @@ class ParkController extends BaseController
                 $obj_bill->order_amount = ceil((time() - $park->go_in)/3600) * $park->access->unit_price + $park->base_total;
                 $obj_bill->license = $park->license_plate;
                 $obj_bill->parking_time = time() - $park->go_in;
-                $obj_bill->user_id =$park->user_id;
+                $obj_bill->user_id =$park->user_id?$park->user_id:0;
                 $obj_bill->add_time = time();
                 $obj_bill->order_state = 30;
                 $obj_bill->expire_time = $park->go_in+ceil((time() - $park->go_in)) < 900 ?
